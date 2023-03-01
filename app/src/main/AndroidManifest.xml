@@ -19,9 +19,6 @@
         android:theme="@style/Theme.SmartSecureApp"
         android:usesCleartextTraffic="true"
         tools:targetApi="33">
-        <activity
-            android:name=".OtpActivity"
-            android:exported="false" />
         <!--
              TODO: Before you run your application, you need a Google Maps API key.
 
@@ -35,7 +32,7 @@
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyC_0q0K8a9JZHPr5rAKPGpnYmglrm7vbHE" />
+            android:value="AIzaSyAMmYusXu9DeEnmEvw48H9VUBFMxjsu5Qc" />
 
         <activity
             android:name=".Activity.activity.SignUpActivity"

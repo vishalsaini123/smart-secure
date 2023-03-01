@@ -6,10 +6,6 @@
     android:background="@color/black"
     tools:context=".Activity.fragment.LocationFragment">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -36,6 +32,13 @@
                     android:layout_below="@id/txt_location"
                     android:layout_above="@id/img_secure"
                     android:background="@color/white">
+                    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+                        xmlns:tools="http://schemas.android.com/tools"
+                        android:id="@+id/map"
+                        android:name="com.google.android.gms.maps.SupportMapFragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        tools:context=".Activity.fragment.LocationFragment" />
 
                 </LinearLayout>
 
@@ -109,13 +112,5 @@
             </LinearLayout>
 
         </LinearLayout>
-
-
-
-    </ScrollView>
-
-
-
-
 
 </RelativeLayout>
