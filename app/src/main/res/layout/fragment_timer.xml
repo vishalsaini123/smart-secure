@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/rootLayout"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/black"
+    tools:context=".Activity.fragment.TimerFragment">
+
+    <TextView
+        android:id="@+id/txt_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/timer"
+        android:textSize="30dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:textColor="@color/txt_red"
+        android:textStyle="bold"
+        android:layout_gravity="center" />
+
+    <TextView
+        android:id="@+id/setTimer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/set_timer"
+        android:textSize="15dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="40dp"
+        android:textColor="@color/txt_red"
+        android:textStyle="bold"
+        android:layout_gravity="center" />
+
+    <TextView
+        android:id="@+id/timeDisplay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="00:00"
+        android:textColor="@color/white"
+        android:textSize="40dp"
+        android:textStyle="bold"></TextView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/timePercentage"
+        android:layout_below="@+id/timeDisplay"
+        android:text="0%"
+        android:textColor="@color/white"
+        android:textSize="15dp"
+        android:textStyle="bold"
+        android:layout_marginLeft="16dp">
+    </TextView>
+
+    <ProgressBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/timePercentage"
+        android:layout_marginTop="10dp"
+        android:id="@+id/progressBar"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        style="@android:style/Widget.ProgressBar.Horizontal">
+    </ProgressBar>
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:visibility="gone"
+        android:layout_gravity="center"
+        android:src="@drawable/timer_icon_new" />
+
+
+    <TextView
+        android:id="@+id/txt_emergency_one"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/timer_text"
+        android:textSize="13dp"
+        android:visibility="invisible"
+        android:layout_below="@+id/progressBar"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/txt_emergency_two"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/timer_text_one"
+        android:textSize="13dp"
+        android:visibility="invisible"
+        android:layout_below="@+id/txt_emergency_one"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/white"
+        android:layout_marginTop="6dp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:text="Stop Timer"
+        android:visibility="invisible"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="90dp"
+        app:cornerRadius="30dp"
+        android:id="@+id/stopTimer"
+        android:layout_alignParentBottom="true"
+        android:backgroundTint="@color/btn_red"
+        android:textSize="14dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:textStyle="bold"
+        android:textAllCaps="true" />
+
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:id="@+id/loading"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        android:layout_height="wrap_content">
+    </ProgressBar>
+
+</RelativeLayout>
