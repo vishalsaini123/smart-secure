@@ -1,9 +1,11 @@
 package com.smartsecureapp.Activity.fragment;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Paint;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -25,6 +28,8 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.snackbar.Snackbar;
+import com.smartsecureapp.Activity.util.Utils;
 import com.smartsecureapp.R;
 
 
@@ -33,6 +38,7 @@ public class LocationFragment extends Fragment {
     FusedLocationProviderClient fusedLocationProviderClient;
     private static final int REQUEST_READ_CONTACTS_PERMISSION = 0;
     Double lat,lng;
+    RelativeLayout rootLayout;
 
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
 
@@ -58,8 +64,7 @@ public class LocationFragment extends Fragment {
                         lat = location.getLatitude();
                         lng = location.getLongitude();
                     }else {
-                        lat = 32.3027286;
-                        lng = 75.8818221;
+                        showSnackBar("Could not fetch your location.");
                     }
                     LatLng sydney = new LatLng(lat,lng);
                     googleMap.addMarker(new MarkerOptions().position(sydney).title(""));
@@ -78,7 +83,14 @@ public class LocationFragment extends Fragment {
         requestLocationPermission();
         txt_privacy_policy = view.findViewById(R.id.txt_privacy_policy);
         txt_term_condition = view.findViewById(R.id.txt_term_condition);
-
+        rootLayout = view.findViewById(R.id.rootLayout);
+        txt_term_condition.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Utils.term_and_conditions));
+                startActivity(browserIntent);
+            }
+        });
         txt_privacy_policy.setPaintFlags(txt_privacy_policy.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         txt_term_condition.setPaintFlags(txt_term_condition.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         return view;
@@ -97,5 +109,16 @@ public class LocationFragment extends Fragment {
     private void requestLocationPermission(){
         ActivityCompat.requestPermissions(getActivity(),
                 new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_READ_CONTACTS_PERMISSION);
+    }
+    private void showSnackBar(String msg) {
+        Snackbar snackbar = Snackbar.make(rootLayout, msg, Snackbar.LENGTH_LONG);
+        snackbar.setAction("OK", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        snackbar.dismiss();
+                    }
+                })
+                .setActionTextColor(getResources().getColor(R.color.btn_red));
+        snackbar.show();
     }
 }

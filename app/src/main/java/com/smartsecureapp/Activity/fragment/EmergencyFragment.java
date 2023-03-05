@@ -3,6 +3,7 @@ package com.smartsecureapp.Activity.fragment;
 import static android.content.Context.MODE_PRIVATE;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.AssetFileDescriptor;
@@ -81,7 +82,13 @@ public class EmergencyFragment extends Fragment {
 
         txt_privacy_policy = view.findViewById(R.id.txt_privacy_policy);
         txt_term_condition = view.findViewById(R.id.txt_term_condition);
-
+        txt_term_condition.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Utils.term_and_conditions));
+                startActivity(browserIntent);
+            }
+        });
         txt_privacy_policy.setPaintFlags(txt_privacy_policy.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         txt_term_condition.setPaintFlags(txt_term_condition.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 

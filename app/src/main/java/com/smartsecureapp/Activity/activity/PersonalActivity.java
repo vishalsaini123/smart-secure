@@ -2,8 +2,10 @@ package com.smartsecureapp.Activity.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Paint;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
@@ -44,6 +46,13 @@ public class PersonalActivity extends AppCompatActivity {
 
         txt_privacy_policy = findViewById(R.id.txt_privacy_policy);
         txt_term_condition = findViewById(R.id.txt_term_condition);
+        txt_term_condition.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Utils.term_and_conditions));
+                startActivity(browserIntent);
+            }
+        });
         img_back = findViewById(R.id.img_back);
         firstName = findViewById(R.id.firstName);
         last_name = findViewById(R.id.lastName);

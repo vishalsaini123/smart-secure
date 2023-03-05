@@ -17,6 +17,8 @@
     <string name="personal">Personal</string>
     <string name="call">Call</string>
     <string name="email">Email</string>
+    <string name="your_new_password">Your new password</string>
+    <string name="retype_your_new_password">Retype your new password</string>
     <string name="subject">Subject</string>
     <string name="whats_app">WhatsApp</string>
     <string name="sms">SMS</string>
@@ -54,8 +56,10 @@
     <string name="recording4">Recording 4</string>
     <string name="recording5">Recording 5</string>
     <string name="password">PASSWORD</string>
+    <string name="enter_new_password">Enter New Password</string>
     <string name="password_text">Please enter your registered email and press\n submit to reset your password. To reset password\n please check your email.</string>
     <string name="contact_us_one">CONTACT US</string>
+    <string name="reset_your_password">Let\'s reset your password</string>
     <string name="name">Name</string>
     <string name="message">Message</string>
     <string name="sign_out_one">SIGN OUT</string>

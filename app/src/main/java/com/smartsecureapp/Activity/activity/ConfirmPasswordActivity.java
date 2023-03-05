@@ -1,7 +1,5 @@
 package com.smartsecureapp.Activity.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,6 +11,8 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -27,7 +27,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SignInActivity extends AppCompatActivity {
+public class ConfirmPasswordActivity extends AppCompatActivity {
 
     TextInputEditText email, password;
     TextView txt_privacy_policy, txt_term_condition, txt_create_account,forgotPassword;
@@ -39,7 +39,7 @@ public class SignInActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_in);
+        setContentView(R.layout.activity_password_reset_otp);
 
         if (getLoginApiFromShared(Utils.MySharedId)!= null && !getLoginApiFromShared(Utils.MySharedId).isEmpty()){
             loggedIn();
@@ -64,7 +64,7 @@ public class SignInActivity extends AppCompatActivity {
         forgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(SignInActivity.this,PasswordResetActivity.class));
+                startActivity(new Intent(ConfirmPasswordActivity.this,PasswordResetActivity.class));
             }
         });
 
@@ -89,7 +89,7 @@ public class SignInActivity extends AppCompatActivity {
         txt_create_account.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(SignInActivity.this, SignUpActivity.class));
+                startActivity(new Intent(ConfirmPasswordActivity.this, SignUpActivity.class));
             }
         });
 
@@ -142,7 +142,7 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     private void loggedIn() {
-        startActivity(new Intent(SignInActivity.this, MainActivity.class));
+        startActivity(new Intent(ConfirmPasswordActivity.this, MainActivity.class));
     }
 
     private void setLoginApiToShared(Response<LoginApi> response, String passwordString) {

@@ -69,6 +69,13 @@ public class ActivityEmailContact extends AppCompatActivity {
 
         txt_privacy_policy = findViewById(R.id.txt_privacy_policy);
         txt_term_condition = findViewById(R.id.txt_term_condition);
+        txt_term_condition.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Utils.term_and_conditions));
+                startActivity(browserIntent);
+            }
+        });
         img_back = findViewById(R.id.img_back);
         addButton = findViewById(R.id.addButton);
         contactRecyclerView = findViewById(R.id.contactRecyclerView);

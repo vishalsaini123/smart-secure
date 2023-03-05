@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Paint;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -74,6 +75,13 @@ public class SettingFragment extends Fragment {
 
         txt_privacy_policy = view.findViewById(R.id.txt_privacy_policy);
         txt_term_condition = view.findViewById(R.id.txt_term_condition);
+        txt_term_condition.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Utils.term_and_conditions));
+                startActivity(browserIntent);
+            }
+        });
 
         txt_privacy_policy.setPaintFlags(txt_privacy_policy.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         txt_term_condition.setPaintFlags(txt_term_condition.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
@@ -145,6 +153,7 @@ public class SettingFragment extends Fragment {
             public void onClick(View v) {
                 signOutFromShared();
                 startActivity(new Intent(getActivity(), SignInActivity.class));
+                getActivity().finish();
             }
         });
         relative_delete_account.setOnClickListener(new View.OnClickListener() {
@@ -187,6 +196,7 @@ public class SettingFragment extends Fragment {
                 if (response != null && response.body() != null && !response.body().getError()) {
                     signOutFromShared();
                     startActivity(new Intent(getActivity(), SignUpActivity.class));
+                    getActivity().finish();
                 } else {
                     showSnackBar(response.body().getAlert());
                 }

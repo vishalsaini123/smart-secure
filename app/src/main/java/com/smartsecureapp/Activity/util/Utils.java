@@ -39,4 +39,7 @@ public class Utils {
     public static String deleteUser = "deleteUser";
     public static String get_whatsapp_contacts = "get_whatsapp_contacts";
     public static String get_email_contacts = "get_email_contacts";
+    public static String forgot_password_one = "forgot_password_one";
+    public static String forgot_password_third = "forgot_password_third";
+    public static String term_and_conditions = "https://smartsecureteam.com/terms_of_use.php";
 }

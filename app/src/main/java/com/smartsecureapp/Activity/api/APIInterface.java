@@ -241,4 +241,21 @@ public interface APIInterface {
             @Part MultipartBody.Part audio
 
     );
+
+    @FormUrlEncoded
+    @POST(baseUrlSuffix)
+    Call<SmsContactApi> forgot_password_one(
+            @Field("email") String email,
+            @Field("func") String func
+
+    );
+
+    @FormUrlEncoded
+    @POST(baseUrlSuffix)
+    Call<SmsContactApi> forgot_password_third(
+            @Field("email") String email,
+            @Field("func") String func,
+            @Field("password") String password
+
+    );
 }

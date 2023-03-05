@@ -83,6 +83,13 @@
                 android:value="" />
         </activity>
         <activity
+            android:name=".Activity.activity.PasswordResetActivityOtp"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".Activity.activity.HistoryActivity"
             android:exported="false">
             <meta-data
@@ -91,6 +98,20 @@
         </activity>
         <activity
             android:name=".Activity.activity.OtpActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".Activity.activity.OtpPasswordActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".Activity.activity.ConfirmPasswordActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
