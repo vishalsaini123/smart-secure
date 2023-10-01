@@ -53,7 +53,6 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:background="@drawable/border_shap"
                 android:orientation="vertical">
 
                 <TextView
@@ -64,8 +63,7 @@
                     android:id="@+id/name"
                     android:layout_centerVertical="true"
                     android:textStyle="bold"
-                    android:textColor="@color/txt_red"
-                    android:textColorHint="@color/txt_red"
+                    android:textColor="@color/white"
                     android:textSize="16dp" />
 
             </RelativeLayout>
@@ -74,7 +72,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginTop="8dp"
-                android:background="@drawable/border_shap"
                 android:orientation="vertical">
 
                 <TextView
@@ -85,8 +82,7 @@
                     android:id="@+id/email"
                     android:layout_centerVertical="true"
                     android:textStyle="bold"
-                    android:textColor="@color/txt_red"
-                    android:textColorHint="@color/txt_red"
+                    android:textColor="@color/white"
                     android:textSize="16dp" />
 
             </RelativeLayout>
@@ -94,13 +90,14 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 android:background="@drawable/border_shap"
                 android:orientation="vertical">
 
                 <EditText
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
+                    android:backgroundTint="@android:color/transparent"
                     android:layout_marginStart="13dp"
                     android:hint="@string/subject"
                     android:id="@+id/subject"
@@ -121,7 +118,8 @@
 
                 <EditText
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
+                    android:backgroundTint="@android:color/transparent"
                     android:layout_marginStart="13dp"
                     android:layout_marginEnd="13dp"
                     android:hint="@string/message"
@@ -158,8 +156,8 @@
 
                 <ImageView
                     android:id="@+id/img_secure"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
                     android:layout_gravity="center"
                     android:src="@drawable/smart_secure_icon" />
 

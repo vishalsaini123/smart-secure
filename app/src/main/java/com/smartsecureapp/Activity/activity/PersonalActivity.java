@@ -12,6 +12,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.google.android.material.button.MaterialButton;
@@ -21,6 +22,7 @@ import com.smartsecureapp.Activity.api.APIInterface;
 import com.smartsecureapp.Activity.api.RetrofitClient;
 import com.smartsecureapp.Activity.model.GetSmsContact;
 import com.smartsecureapp.Activity.model.GetUserProfile;
+import com.smartsecureapp.Activity.model.LoginApi;
 import com.smartsecureapp.Activity.model.UpdateProfile;
 import com.smartsecureapp.Activity.util.Utils;
 import com.smartsecureapp.R;
@@ -33,7 +35,7 @@ public class PersonalActivity extends AppCompatActivity {
     TextView txt_privacy_policy, txt_term_condition;
     ImageView img_back;
     TextInputEditText firstName, last_name, country, phone, email;
-    CheckBox male, female, other;
+    RadioButton male, female, other;
     APIInterface apiInterface;
     ProgressBar loading;
     String gender = "";
@@ -49,7 +51,7 @@ public class PersonalActivity extends AppCompatActivity {
         txt_term_condition.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Utils.term_and_conditions));
+                Intent browserIntent = new Intent(PersonalActivity.this, TermsConditionsActivity.class);
                 startActivity(browserIntent);
             }
         });
@@ -81,8 +83,7 @@ public class PersonalActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (male.isChecked()){
                     gender = "male";
-                    female.setChecked(false);
-                    other.setChecked(false);
+
                 }
             }
         });
@@ -91,8 +92,7 @@ public class PersonalActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (female.isChecked()){
                     gender = "female";
-                    male.setChecked(false);
-                    other.setChecked(false);
+
                 }
             }
         });
@@ -101,8 +101,7 @@ public class PersonalActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (other.isChecked()){
                     gender = "other";
-                    male.setChecked(false);
-                    female.setChecked(false);
+
                 }
             }
         });
@@ -114,8 +113,8 @@ public class PersonalActivity extends AppCompatActivity {
             }
         });
 
-        txt_privacy_policy.setPaintFlags(txt_privacy_policy.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-        txt_term_condition.setPaintFlags(txt_term_condition.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+      //  txt_privacy_policy.setPaintFlags(txt_privacy_policy.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+       // txt_term_condition.setPaintFlags(txt_term_condition.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
 
     }
@@ -152,6 +151,8 @@ public class PersonalActivity extends AppCompatActivity {
                         female.setChecked(false);
                         gender = "other";
                     }
+
+                    setLoginApiToShared(response);
                 }
             }
 
@@ -192,7 +193,15 @@ public class PersonalActivity extends AppCompatActivity {
         });
 
     }
+    private void setLoginApiToShared(Response<GetUserProfile> response) {
+        if (response != null && response.body()!=null) {
+            SharedPreferences sharedPreferences = getSharedPreferences(Utils.MyPref, MODE_PRIVATE);
+            SharedPreferences.Editor prefsEditor = sharedPreferences.edit();
+            prefsEditor.putString(Utils.MySharedUsername, response.body().getData() != null ? response.body().getData().get(0).getUsername() : "");
 
+            prefsEditor.apply();
+        }
+    }
     private void showSnackBar(String msg) {
         Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), msg, Snackbar.LENGTH_LONG);
         snackbar.setAction("OK", new View.OnClickListener() {

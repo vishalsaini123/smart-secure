@@ -84,7 +84,7 @@ public class SMSActivity extends AppCompatActivity {
         txt_term_condition.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Utils.term_and_conditions));
+                Intent browserIntent = new Intent(SMSActivity.this,TermsConditionsActivity.class);
                 startActivity(browserIntent);
             }
         });
@@ -106,8 +106,8 @@ public class SMSActivity extends AppCompatActivity {
         });
 
 
-        txt_privacy_policy.setPaintFlags(txt_privacy_policy.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-        txt_term_condition.setPaintFlags(txt_term_condition.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+      //  txt_privacy_policy.setPaintFlags(txt_privacy_policy.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+      //  txt_term_condition.setPaintFlags(txt_term_condition.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
     }
 
     private void clickListeners() {
@@ -122,7 +122,11 @@ public class SMSActivity extends AppCompatActivity {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(SMSActivity.this);
+
+                Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
+                intent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE);
+                startActivityForResult(intent, 1);
+               /* BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(SMSActivity.this);
                 bottomSheetDialog.setContentView(R.layout.add_contact_sheet);
                 TextView manualContact = bottomSheetDialog.findViewById(R.id.manualContact);
                 TextView pickContact = bottomSheetDialog.findViewById(R.id.pickContact);
@@ -169,7 +173,7 @@ public class SMSActivity extends AppCompatActivity {
                         bottomSheetDialog.dismiss();
                     }
                 });
-                bottomSheetDialog.show();
+                bottomSheetDialog.show();*/
             }
         });
     }
@@ -205,8 +209,12 @@ public class SMSActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<GetSmsContact> call, Response<GetSmsContact> response) {
                 loading.setVisibility(View.INVISIBLE);
-                if (response!=null && response.body()!=null && !response.body().getContacts().isEmpty()) {
-                    resetList(response);
+                if (response.body()!=null && response.body().getContacts()!=null) {
+                    if (!response.body().getContacts().isEmpty())
+                    {
+                        resetList(response);
+                    }
+
                 }
             }
 

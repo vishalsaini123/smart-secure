@@ -71,8 +71,8 @@
 
         <ImageView
             android:id="@+id/img_secure"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
             android:layout_above="@id/txt_copyright"
             android:layout_centerHorizontal="true"
             android:src="@drawable/smart_secure_icon" />

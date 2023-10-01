@@ -92,7 +92,7 @@ public class OtpActivity extends AppCompatActivity {
         loading.setVisibility(View.VISIBLE);
         hideKeyboard();
         apiInterface = RetrofitClient.getClient().create(APIInterface.class);
-        Call<LoginApi> call = apiInterface.login(email,Utils.login,password);
+        Call<LoginApi> call = apiInterface.login(email,Utils.login,password,getLoginApiFromShared(Utils.MyDeviceToken));
         call.enqueue(new Callback<LoginApi>() {
             @Override
             public void onResponse(Call<LoginApi> call, Response<LoginApi> response) {
@@ -148,5 +148,11 @@ public class OtpActivity extends AppCompatActivity {
                 })
                 .setActionTextColor(getResources().getColor(R.color.btn_red));
         snackbar.show();
+    }
+
+    private String getLoginApiFromShared(String key){
+        SharedPreferences sharedPreferences = getSharedPreferences(Utils.MyPref,MODE_PRIVATE);
+        String value = sharedPreferences.getString(key, "");
+        return value;
     }
 }

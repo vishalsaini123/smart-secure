@@ -45,7 +45,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Activity_WhatsApp extends AppCompatActivity {
-    TextView txt_privacy_policy,txt_term_condition,noContact;
+    TextView txt_privacy_policy, txt_term_condition, noContact;
     ImageView img_back;
 
     ImageView addButton;
@@ -71,7 +71,7 @@ public class Activity_WhatsApp extends AppCompatActivity {
         txt_term_condition.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Utils.term_and_conditions));
+                Intent browserIntent = new Intent(Activity_WhatsApp.this, TermsConditionsActivity.class);
                 startActivity(browserIntent);
             }
         });
@@ -93,8 +93,8 @@ public class Activity_WhatsApp extends AppCompatActivity {
         });
 
 
-        txt_privacy_policy.setPaintFlags(txt_privacy_policy.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-        txt_term_condition.setPaintFlags(txt_term_condition.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        //txt_privacy_policy.setPaintFlags(txt_privacy_policy.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+       // txt_term_condition.setPaintFlags(txt_term_condition.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
     }
 
     private void clickListeners() {
@@ -117,7 +117,11 @@ public class Activity_WhatsApp extends AppCompatActivity {
                 manualContact.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        bottomSheetDialog.dismiss();
+
+                        Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
+                        intent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE);
+                        startActivityForResult(intent, 1);
+                       /* bottomSheetDialog.dismiss();
                         Dialog dialog = new Dialog(Activity_WhatsApp.this, android.R.style.Theme_Dialog);
                         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                         dialog.setContentView(R.layout.dlg_manual_contact);
@@ -128,22 +132,22 @@ public class Activity_WhatsApp extends AppCompatActivity {
                         doneButton.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                if (!nameEditText.getText().toString().isEmpty() && !phoneEditText.getText().toString().isEmpty()){
+                                if (!nameEditText.getText().toString().isEmpty() && !phoneEditText.getText().toString().isEmpty()) {
                                     nameList.add(nameEditText.getText().toString());
                                     phoneList.add(phoneEditText.getText().toString());
                                     orderList.add(String.valueOf(nameList.size()));
                                     setAdapter(nameList);
                                     dialog.dismiss();
-                                }else {
-                                    if (nameEditText.getText().toString().isEmpty()){
+                                } else {
+                                    if (nameEditText.getText().toString().isEmpty()) {
                                         nameEditText.setError("All fields are required.");
-                                    }else if (phoneEditText.getText().toString().isEmpty()){
+                                    } else if (phoneEditText.getText().toString().isEmpty()) {
                                         phoneEditText.setError("All fields are required.");
                                     }
                                 }
                             }
                         });
-                        dialog.show();
+                        dialog.show();*/
                     }
                 });
 
@@ -164,15 +168,15 @@ public class Activity_WhatsApp extends AppCompatActivity {
     private void sendSmsContactApi() {
         loading.setVisibility(View.VISIBLE);
         apiInterface = RetrofitClient.getClient().create(APIInterface.class);
-        Call<SmsContactApi> call = apiInterface.whatsapp_contacts(Utils.whatsapp_contacts,getLoginApiFromShared(Utils.MySharedId), TextUtils.join(",",nameList),TextUtils.join(",",phoneList),TextUtils.join(",",orderList));
+        Call<SmsContactApi> call = apiInterface.whatsapp_contacts(Utils.whatsapp_contacts, getLoginApiFromShared(Utils.MySharedId), TextUtils.join(",", nameList), TextUtils.join(",", phoneList), TextUtils.join(",", orderList));
         call.enqueue(new Callback<SmsContactApi>() {
             @Override
             public void onResponse(Call<SmsContactApi> call, Response<SmsContactApi> response) {
-                if (response.body().getError() != null && !response.body().getError()){
+                if (response.body().getError() != null && !response.body().getError()) {
                     loading.setVisibility(View.INVISIBLE);
                     onBackPressed();
 
-                }else {
+                } else {
                     loading.setVisibility(View.INVISIBLE);
                 }
             }
@@ -187,12 +191,12 @@ public class Activity_WhatsApp extends AppCompatActivity {
     private void getSmsContactApi() {
         loading.setVisibility(View.VISIBLE);
         apiInterface = RetrofitClient.getClient().create(APIInterface.class);
-        Call<GetSmsContact> callGetSms = apiInterface.get_whatsapp_contacts(getLoginApiFromShared(Utils.MySharedId),Utils.get_whatsapp_contacts);
+        Call<GetSmsContact> callGetSms = apiInterface.get_whatsapp_contacts(getLoginApiFromShared(Utils.MySharedId), Utils.get_whatsapp_contacts);
         callGetSms.enqueue(new Callback<GetSmsContact>() {
             @Override
             public void onResponse(Call<GetSmsContact> call, Response<GetSmsContact> response) {
                 loading.setVisibility(View.INVISIBLE);
-                if (response!=null && response.body()!=null && !response.body().getContacts().isEmpty()) {
+                if (response != null && response.body() != null && response.body().getContacts() != null && !response.body().getContacts().isEmpty()) {
                     resetList(response);
                 }
             }
@@ -204,28 +208,28 @@ public class Activity_WhatsApp extends AppCompatActivity {
         });
     }
 
-        private void resetList(Response<GetSmsContact> response) {
-            nameList.clear();
-            phoneList.clear();
-            orderList.clear();
-            if (response!=null && response.body()!=null && !response.body().getContacts().isEmpty()) {
-                for (int i = 0; i < response.body().getContacts().size(); i++) {
-                    if (response.body().getContacts().get(i).getName().length()>0 && response.body().getContacts().get(i).getPhone().length()>0) {
-                        nameList.add(response.body().getContacts().get(i).getName());
-                        phoneList.add(response.body().getContacts().get(i).getPhone());
-                        orderList.add(String.valueOf(i + 1));
-                    }
+    private void resetList(Response<GetSmsContact> response) {
+        nameList.clear();
+        phoneList.clear();
+        orderList.clear();
+        if (response != null && response.body() != null && !response.body().getContacts().isEmpty()) {
+            for (int i = 0; i < response.body().getContacts().size(); i++) {
+                if (response.body().getContacts().get(i).getName().length() > 0 && response.body().getContacts().get(i).getPhone().length() > 0) {
+                    nameList.add(response.body().getContacts().get(i).getName());
+                    phoneList.add(response.body().getContacts().get(i).getPhone());
+                    orderList.add(String.valueOf(i + 1));
                 }
-                if (!nameList.isEmpty()) {
-                    setAdapter(nameList);
-                    noContact.setVisibility(View.GONE);
-                }else {
-                    noContact.setVisibility(View.VISIBLE);
-                }
-            }else {
+            }
+            if (!nameList.isEmpty()) {
+                setAdapter(nameList);
+                noContact.setVisibility(View.GONE);
+            } else {
                 noContact.setVisibility(View.VISIBLE);
             }
+        } else {
+            noContact.setVisibility(View.VISIBLE);
         }
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -234,7 +238,7 @@ public class Activity_WhatsApp extends AppCompatActivity {
             Cursor cursor = null;
             try {
                 Uri uri = data.getData();
-                cursor = getContentResolver().query(uri, new String[] { ContactsContract.CommonDataKinds.Phone.NUMBER, ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME}, null, null, null);
+                cursor = getContentResolver().query(uri, new String[]{ContactsContract.CommonDataKinds.Phone.NUMBER, ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME}, null, null, null);
                 if (cursor != null && cursor.moveToNext()) {
                     String phone = cursor.getString(0);
                     String name = cursor.getString(1);
@@ -248,21 +252,20 @@ public class Activity_WhatsApp extends AppCompatActivity {
             }
         }
     }
-    private void requestContactsPermission()
-    {
-        if (!hasContactsPermission())
-        {
+
+    private void requestContactsPermission() {
+        if (!hasContactsPermission()) {
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.READ_CONTACTS}, REQUEST_READ_CONTACTS_PERMISSION);
         }
     }
-    private boolean hasContactsPermission()
-    {
+
+    private boolean hasContactsPermission() {
         return ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) ==
                 PackageManager.PERMISSION_GRANTED;
     }
 
-    public void setAdapter(ArrayList<String> nameList){
+    public void setAdapter(ArrayList<String> nameList) {
         contactRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         SmsAdapter callAdapter = new SmsAdapter(nameList, new SmsCallback() {
             @Override
@@ -280,8 +283,8 @@ public class Activity_WhatsApp extends AppCompatActivity {
         setAdapter(nameList);
     }
 
-    private String getLoginApiFromShared(String key){
-        SharedPreferences sharedPreferences = getSharedPreferences(Utils.MyPref,MODE_PRIVATE);
+    private String getLoginApiFromShared(String key) {
+        SharedPreferences sharedPreferences = getSharedPreferences(Utils.MyPref, MODE_PRIVATE);
         String value = sharedPreferences.getString(key, "");
         return value;
     }

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_margin="20dp"
+     android:layout_gravity="center"
+    android:background="@color/white"
+    android:layout_height="wrap_content">
+   <RelativeLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content">
+
+       <ImageView
+           android:layout_centerHorizontal="true"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_gravity="center_horizontal"
+           android:layout_marginTop="10dp"
+           android:src="@mipmap/ic_launcher"/>
+
+       <TextView
+           android:id="@+id/dlg_forgotpassbtn"
+           android:layout_alignParentEnd="true"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="Forgot Password"
+           android:textSize="14sp"
+           android:layout_marginTop="10dp"
+           android:layout_marginBottom="10dp"
+           android:layout_marginLeft="16dp"
+           android:layout_marginRight="16dp"
+           android:textColor="#709FE3"
+           android:layout_gravity="center_horizontal"
+           android:textStyle="bold">
+       </TextView>
+
+
+   </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/deactivate"
+        android:textSize="15dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:textColor="@color/btn_red"
+        android:layout_gravity="center_horizontal"
+        android:textStyle="bold">
+    </TextView>
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="10dp"
+        app:boxBackgroundColor="@android:color/transparent"
+        android:layout_marginRight="16dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:hint="Enter password"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+
+            android:id="@+id/passwordEditText"
+            android:inputType="textPassword"
+
+            android:layout_height="wrap_content"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:layout_width="match_parent"
+        android:hint="Contact"
+        android:id="@+id/phoneEditText"
+        android:inputType="phone"
+        android:visibility="gone"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_height="wrap_content">
+    </com.google.android.material.textfield.TextInputEditText>
+
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_marginBottom="-7dp"
+            android:layout_height="55dp"
+            android:id="@+id/confirmButton"
+            android:text="Confirm"
+            android:layout_marginTop="35dp"
+            app:cornerRadius="0dp"
+            android:layout_above="@+id/bottomLayout"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            android:textAllCaps="false"/>
+
+</LinearLayout>

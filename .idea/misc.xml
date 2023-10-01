@@ -1,7 +1,17 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="app/src/main/res/layout/activity_history.xml" value="0.33948160807291666" />
+        <entry key="app/src/main/res/layout/activity_historyactivity.xml" value="0.2828125" />
+        <entry key="app/src/main/res/layout/call_contact_item.xml" value="0.9157862345377605" />
+        <entry key="app/src/main/res/layout/history_contact_item.xml" value="0.2828125" />
+        <entry key="app/src/main/res/layout/sms_contact_item.xml" value="0.7777777777777778" />
+      </map>
+    </option>
+  </component>
   <component name="ExternalStorageConfigurationManager" enabled="true" />
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_17" project-jdk-name="jbr-17" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

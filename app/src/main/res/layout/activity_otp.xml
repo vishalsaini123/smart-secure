@@ -54,35 +54,46 @@
                 android:layout_height="wrap_content"
                 android:text="@string/otp_text"
                 android:textSize="14dp"
-                android:layout_gravity="center"
-                android:textStyle="bold"
+                android:layout_gravity="start"
+                android:textStyle="normal"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
-                android:gravity="center"
+                android:gravity="start"
                 android:textColor="@color/white"
                 android:layout_centerHorizontal="true"/>
 
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="50dp"
-                android:background="@drawable/border_shap"
                 android:orientation="vertical">
 
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="13dp"
-                    android:layout_marginEnd="13dp"
-                    android:hint="Enter OTP"
-                    android:inputType="number"
+
+                <com.chaos.view.PinView
                     android:id="@+id/otp"
-                    android:layout_centerVertical="true"
+                    android:layout_centerHorizontal="true"
+                    style="@style/PinWidget.PinView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:cursorVisible="true"
+                    android:itemBackground="@color/white"
+                    android:inputType="text"
+                   app:lineColor="@color/black"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
                     android:textStyle="bold"
-                    android:textColor="@color/txt_red"
-                    android:textColorHint="@color/txt_red"
-                    android:textSize="16dp" />
+                    app:cursorWidth="2dp"
+                    android:padding="5dp"
+                    app:hideLineWhenFilled="true"
+                    app:itemCount="4"
+                    app:itemHeight="48dp"
+                    app:itemRadius="2dp"
+                    app:itemSpacing="20dp"
+                    app:itemWidth="48dp"
+                    app:lineWidth="2dp"
+                    app:viewType="rectangle" />
+
 
             </RelativeLayout>
 
@@ -93,9 +104,9 @@
                 android:text="Submit"
                 android:id="@+id/submitButton"
                 android:layout_marginTop="40dp"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
-                app:cornerRadius="30dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                app:cornerRadius="8dp"
                 android:backgroundTint="@color/btn_red"
                 android:textSize="16dp"
                 android:textStyle="bold"
@@ -111,8 +122,8 @@
 
                 <ImageView
                     android:id="@+id/img_secure"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
                     android:layout_gravity="center"
                     android:src="@drawable/smart_secure_icon" />
 

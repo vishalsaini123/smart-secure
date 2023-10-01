@@ -2,6 +2,7 @@ package com.smartsecureapp.Activity.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Paint;
@@ -33,6 +34,7 @@ public class ContactUsActivity extends AppCompatActivity {
     MaterialButton submit;
     ProgressBar loading;
     APIInterface apiInterface;
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +45,7 @@ public class ContactUsActivity extends AppCompatActivity {
         txt_term_condition.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Utils.term_and_conditions));
+                Intent browserIntent = new Intent(ContactUsActivity.this, TermsConditionsActivity.class);
                 startActivity(browserIntent);
             }
         });
@@ -53,6 +55,8 @@ public class ContactUsActivity extends AppCompatActivity {
         message = findViewById(R.id.message);
         submit = findViewById(R.id.submit);
         loading = findViewById(R.id.loading);
+        name.setText("Name: "+getLoginApiFromShared(Utils.MySharedUsername));
+        email.setText("Email: "+getLoginApiFromShared(Utils.MySharedEmail));
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -96,8 +100,8 @@ public class ContactUsActivity extends AppCompatActivity {
         });
 
 
-        txt_privacy_policy.setPaintFlags(txt_privacy_policy.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-        txt_term_condition.setPaintFlags(txt_term_condition.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+      //  txt_privacy_policy.setPaintFlags(txt_privacy_policy.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+      //  txt_term_condition.setPaintFlags(txt_term_condition.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
     }
 

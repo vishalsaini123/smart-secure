@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -26,7 +27,7 @@
                     android:layout_gravity="center"
                     android:text="@string/settings"
                     android:textColor="@color/txt_red"
-                    android:textSize="30dp"
+                    android:textSize="25sp"
                     android:textStyle="bold" />
 
 
@@ -52,16 +53,24 @@
                                 android:textStyle="bold"
                                 android:textColor="@color/txt_red"
                                 android:textSize="16dp" />
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text=">"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
                                 android:layout_marginEnd="20dp"
-                                android:textStyle="bold"
                                 android:textColor="@color/txt_red"
-                                android:textSize="20dp" />
+                                android:textSize="20dp"
+                                android:textStyle="bold" />
+
+                            <ImageView
+                                android:id="@+id/imageView3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="300dp"
+                                android:paddingTop="6dp"
+                                android:src="@drawable/right_arrow" />
                         </RelativeLayout>
                         <RelativeLayout
                             android:id="@+id/relative_Call"
@@ -79,17 +88,24 @@
                                 android:layout_centerVertical="true"
                                 android:textStyle="bold"
                                 android:textColor="@color/txt_red"
-                                android:textSize="16dp" />
+                                android:textSize="14sp" />
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text=">"
                                 android:layout_alignParentEnd="true"
-                                android:layout_centerVertical="true"
                                 android:layout_marginEnd="20dp"
-                                android:textStyle="bold"
                                 android:textColor="@color/txt_red"
-                                android:textSize="20dp" />
+                                android:textSize="20dp"
+                                android:textStyle="bold" />
+
+                            <ImageView
+                                android:id="@+id/imageView4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="300dp"
+                                android:paddingTop="6dp"
+                                android:src="@drawable/right_arrow" />
                         </RelativeLayout>
                         <RelativeLayout
                             android:id="@+id/relative_Email"
@@ -107,17 +123,24 @@
                                 android:layout_centerVertical="true"
                                 android:textStyle="bold"
                                 android:textColor="@color/txt_red"
-                                android:textSize="16dp" />
+                                android:textSize="14sp" />
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text=">"
                                 android:layout_alignParentEnd="true"
-                                android:layout_centerVertical="true"
                                 android:layout_marginEnd="20dp"
-                                android:textStyle="bold"
                                 android:textColor="@color/txt_red"
-                                android:textSize="20dp" />
+                                android:textSize="20dp"
+                                android:textStyle="bold" />
+
+                            <ImageView
+                                android:id="@+id/imageView5"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="300dp"
+                                android:paddingTop="6dp"
+                                android:src="@drawable/right_arrow" />
                         </RelativeLayout>
                         <RelativeLayout
                             android:id="@+id/relative_whatsApp"
@@ -135,17 +158,25 @@
                                 android:layout_centerVertical="true"
                                 android:textStyle="bold"
                                 android:textColor="@color/txt_red"
-                                android:textSize="16dp" />
+                                android:textSize="14sp" />
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text=">"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
                                 android:layout_marginEnd="20dp"
-                                android:textStyle="bold"
                                 android:textColor="@color/txt_red"
-                                android:textSize="20dp" />
+                                android:textSize="20dp"
+                                android:textStyle="bold" />
+
+                            <ImageView
+                                android:id="@+id/imageView6"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="300dp"
+                                android:paddingTop="6dp"
+                                android:src="@drawable/right_arrow" />
                         </RelativeLayout>
                         <RelativeLayout
                             android:id="@+id/relative_sms"
@@ -163,17 +194,25 @@
                                 android:layout_centerVertical="true"
                                 android:textStyle="bold"
                                 android:textColor="@color/txt_red"
-                                android:textSize="16dp" />
+                                android:textSize="14sp" />
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text=">"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
                                 android:layout_marginEnd="20dp"
-                                android:textStyle="bold"
                                 android:textColor="@color/txt_red"
-                                android:textSize="20dp" />
+                                android:textSize="20dp"
+                                android:textStyle="bold" />
+
+                            <ImageView
+                                android:id="@+id/imageView7"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="300dp"
+                                android:paddingTop="6dp"
+                                android:src="@drawable/right_arrow" />
                         </RelativeLayout>
                         <RelativeLayout
                             android:id="@+id/relative_siren"
@@ -191,25 +230,61 @@
                                 android:layout_centerVertical="true"
                                 android:textStyle="bold"
                                 android:textColor="@color/txt_red"
-                                android:textSize="16dp" />
+                                android:textSize="14sp" />
 
-                            <Switch
+                            <androidx.appcompat.widget.SwitchCompat
                                 android:id="@+id/simpleSwitch2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
-                                android:background="@drawable/rounded_border_shap"
                                 android:checked="true"
                                 android:textColor="@color/btn_red"
                                 android:textOff="Off"
                                 android:textOn="On"
+                                app:track="@drawable/trackselector"
+                                android:thumb="@drawable/thumbselector"
                                 android:layout_marginEnd="10dp"
                                 android:theme="@style/MySwitch"
                                 android:thumbTint="@color/white"
-                                android:trackTint="@color/btn_red"
                                 tools:ignore="UseSwitchCompatOrMaterialXml" />
 
+                        </RelativeLayout>
+                        <RelativeLayout
+                            android:id="@+id/relative_payment"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_marginTop="8dp"
+                            android:background="@drawable/border_shap"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginStart="13dp"
+                                android:text="Payment"
+                                android:textColor="@color/txt_red"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginEnd="20dp"
+                                android:textColor="@color/txt_red"
+                                android:textSize="20dp"
+                                android:textStyle="bold" />
+
+                            <ImageView
+                                android:id="@+id/imageView8"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="300dp"
+                                android:paddingTop="6dp"
+                                android:src="@drawable/right_arrow" />
                         </RelativeLayout>
                         <RelativeLayout
                             android:id="@+id/relative_history"
@@ -227,17 +302,61 @@
                                 android:layout_centerVertical="true"
                                 android:textStyle="bold"
                                 android:textColor="@color/txt_red"
-                                android:textSize="16dp" />
+                                android:textSize="14sp" />
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text=">"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
                                 android:layout_marginEnd="20dp"
+                                android:textColor="@color/txt_red"
+                                android:textSize="20dp"
+                                android:textStyle="bold" />
+
+                            <ImageView
+                                android:id="@+id/imageView9"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="300dp"
+                                android:paddingTop="6dp"
+                                android:src="@drawable/right_arrow" />
+                        </RelativeLayout>
+                        <RelativeLayout
+                            android:id="@+id/relative_privacypolicy"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_marginTop="8dp"
+                            android:background="@drawable/border_shap"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="13dp"
+                                android:text="@string/privacy_policy"
+                                android:layout_centerVertical="true"
                                 android:textStyle="bold"
                                 android:textColor="@color/txt_red"
-                                android:textSize="20dp" />
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginEnd="20dp"
+                                android:textColor="@color/txt_red"
+                                android:textSize="20dp"
+                                android:textStyle="bold" />
+
+                            <ImageView
+                                android:id="@+id/imageView10"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="300dp"
+                                android:paddingTop="6dp"
+                                android:src="@drawable/right_arrow" />
                         </RelativeLayout>
                         <RelativeLayout
                             android:id="@+id/relative_password_reset"
@@ -255,17 +374,25 @@
                                 android:layout_centerVertical="true"
                                 android:textStyle="bold"
                                 android:textColor="@color/txt_red"
-                                android:textSize="16dp" />
+                                android:textSize="14sp" />
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text=">"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
                                 android:layout_marginEnd="20dp"
-                                android:textStyle="bold"
                                 android:textColor="@color/txt_red"
-                                android:textSize="20dp" />
+                                android:textSize="20dp"
+                                android:textStyle="bold" />
+
+                            <ImageView
+                                android:id="@+id/imageView10"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="300dp"
+                                android:paddingTop="6dp"
+                                android:src="@drawable/right_arrow" />
                         </RelativeLayout>
                         <RelativeLayout
                             android:id="@+id/relative_contact_us"
@@ -283,17 +410,25 @@
                                 android:layout_centerVertical="true"
                                 android:textStyle="bold"
                                 android:textColor="@color/txt_red"
-                                android:textSize="16dp" />
+                                android:textSize="14sp" />
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text=">"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
                                 android:layout_marginEnd="20dp"
-                                android:textStyle="bold"
                                 android:textColor="@color/txt_red"
-                                android:textSize="20dp" />
+                                android:textSize="20dp"
+                                android:textStyle="bold" />
+
+                            <ImageView
+                                android:id="@+id/imageView11"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="300dp"
+                                android:paddingTop="6dp"
+                                android:src="@drawable/right_arrow" />
                         </RelativeLayout>
                         <RelativeLayout
                             android:id="@+id/relative_sign_out"
@@ -311,17 +446,25 @@
                                 android:layout_centerVertical="true"
                                 android:textStyle="bold"
                                 android:textColor="@color/txt_red"
-                                android:textSize="16dp" />
+                                android:textSize="14sp" />
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text=">"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
                                 android:layout_marginEnd="20dp"
-                                android:textStyle="bold"
                                 android:textColor="@color/txt_red"
-                                android:textSize="20dp" />
+                                android:textSize="20dp"
+                                android:textStyle="bold" />
+
+                            <ImageView
+                                android:id="@+id/imageView12"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="300dp"
+                                android:paddingTop="6dp"
+                                android:src="@drawable/right_arrow" />
                         </RelativeLayout>
                         <RelativeLayout
                             android:id="@+id/relative_delete_account"
@@ -339,17 +482,25 @@
                                 android:layout_centerVertical="true"
                                 android:textStyle="bold"
                                 android:textColor="@color/txt_red"
-                                android:textSize="16dp" />
+                                android:textSize="14sp" />
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text=">"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
                                 android:layout_marginEnd="20dp"
-                                android:textStyle="bold"
                                 android:textColor="@color/txt_red"
-                                android:textSize="20dp" />
+                                android:textSize="20dp"
+                                android:textStyle="bold" />
+
+                            <ImageView
+                                android:id="@+id/imageView13"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="300dp"
+                                android:paddingTop="6dp"
+                                android:src="@drawable/right_arrow" />
                         </RelativeLayout>
 
                         <LinearLayout
@@ -361,8 +512,8 @@
 
                             <ImageView
                                 android:id="@+id/img_secure"
-                                android:layout_width="100dp"
-                                android:layout_height="100dp"
+                                android:layout_width="150dp"
+                                android:layout_height="150dp"
                                 android:layout_gravity="center"
                                 android:src="@drawable/smart_secure_icon" />
 

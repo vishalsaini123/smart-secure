@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -111,7 +112,8 @@ public class CallAdapter extends RecyclerView.Adapter<CallAdapter.CallViewHolder
     }
 
     public class CallViewHolder extends RecyclerView.ViewHolder {
-        TextView name,deleteContact;
+        TextView name;
+        ImageButton deleteContact;
         ImageView optionButton;
         public CallViewHolder(@NonNull View itemView) {
             super(itemView);

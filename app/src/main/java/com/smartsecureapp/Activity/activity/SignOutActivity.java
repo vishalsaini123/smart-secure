@@ -26,7 +26,7 @@ public class SignOutActivity extends AppCompatActivity {
         txt_term_condition.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Utils.term_and_conditions));
+                Intent browserIntent = new Intent(SignOutActivity.this, TermsConditionsActivity.class);
                 startActivity(browserIntent);
             }
         });
@@ -40,8 +40,8 @@ public class SignOutActivity extends AppCompatActivity {
         });
 
 
-        txt_privacy_policy.setPaintFlags(txt_privacy_policy.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-        txt_term_condition.setPaintFlags(txt_term_condition.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+       // txt_privacy_policy.setPaintFlags(txt_privacy_policy.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+       // txt_term_condition.setPaintFlags(txt_term_condition.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
     }
 }

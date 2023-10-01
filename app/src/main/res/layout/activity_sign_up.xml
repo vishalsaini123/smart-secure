@@ -16,20 +16,20 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="25dp"
+
         android:orientation="vertical">
 
         <RelativeLayout
+            android:paddingStart="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp">
 
             <ImageView
+                android:padding="8dp"
                 android:id="@+id/img_back"
-                android:layout_width="30dp"
-                android:layout_height="25dp"
+                android:layout_width="50dp"
+                android:layout_height="45dp"
                 android:layout_centerVertical="true"
                 android:src="@drawable/back_icon"
                 app:tint="@color/white" />
@@ -40,7 +40,7 @@
                 android:layout_centerHorizontal="true"
                 android:text="@string/Sign_up"
                 android:textColor="@color/white"
-                android:textSize="30dp"
+                android:textSize="25sp"
                 android:textStyle="bold" />
 
         </RelativeLayout>
@@ -53,9 +53,12 @@
             android:layout_marginTop="10dp"
             android:text="@string/signUp_text"
             android:textColor="@color/txt_red"
-            android:textSize="16dp" />
+            android:textSize="16sp" />
 
             <LinearLayout
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -77,6 +80,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
+                        android:backgroundTint="@android:color/transparent"
                         android:hint="@string/first_name"
                         android:id="@+id/firstName"
                         android:textColor="@color/white"
@@ -102,6 +106,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
+                        android:backgroundTint="@android:color/transparent"
                         android:hint="@string/last_name"
                         android:id="@+id/lastName"
                         android:textColor="@color/white"
@@ -125,6 +130,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
+                        android:backgroundTint="@android:color/transparent"
                         android:hint="@string/phone_number"
                         android:id="@+id/phoneNumber"
                         android:inputType="phone"
@@ -147,11 +153,12 @@
                     android:orientation="horizontal">
 
                     <RadioButton
+                        android:id="@+id/male"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/male"
-                        android:id="@+id/male"
                         android:layout_marginEnd="15dp"
+                        android:paddingLeft="20dp"
+                        android:text="@string/male"
                         android:textColor="@color/white"
                         android:textSize="16dp" />
 
@@ -165,11 +172,12 @@
                         android:textSize="16dp" />
 
                     <RadioButton
+                        android:id="@+id/other"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/other"
-                        android:id="@+id/other"
                         android:layout_marginStart="15dp"
+                        android:paddingLeft="10dp"
+                        android:text="@string/other"
                         android:textColor="@color/white"
                         android:textSize="16dp" />
 
@@ -194,6 +202,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
                         android:hint="@string/email"
+                        android:backgroundTint="@android:color/transparent"
                         android:id="@+id/emailId"
                         android:textColor="@color/white"
                         android:textColorHint="@color/grey"
@@ -217,6 +226,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
                         android:hint="Password"
+                        android:backgroundTint="@android:color/transparent"
                         android:id="@+id/password"
                         android:inputType="textPassword"
                         android:textColor="@color/white"
@@ -243,6 +253,7 @@
                         android:layout_marginStart="5dp"
                         android:hint="@string/confirm_password"
                         android:inputType="textPassword"
+                        android:backgroundTint="@android:color/transparent"
                         android:id="@+id/confirmPassword"
                         android:textColor="@color/white"
                         android:textColorHint="@color/grey"
@@ -250,17 +261,19 @@
 
 
                 </LinearLayout>
+
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/submitButton"
                     android:layout_width="match_parent"
-                    android:layout_height="55dp"
+                    android:layout_height="51dp"
                     android:layout_marginTop="30dp"
-                    android:backgroundTint="@color/btn_red"
+                    android:backgroundTint="#8BBD51"
                     android:text="Submit"
                     android:textAllCaps="true"
+                    android:textColor="#FFFEFE"
                     android:textSize="18dp"
                     android:textStyle="bold"
-                    app:cornerRadius="30dp" />
+                    app:cornerRadius="10dp" />
 
 
                 <LinearLayout
@@ -270,8 +283,8 @@
                     android:orientation="vertical">
                     <ImageView
                         android:id="@+id/img_secure"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
                        android:layout_gravity="center"
                         android:src="@drawable/smart_secure_icon" />
                     <TextView

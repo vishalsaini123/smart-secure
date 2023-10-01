@@ -2,6 +2,7 @@ package com.smartsecureapp.Activity.activity;
 
 import android.Manifest;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -29,6 +30,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 import com.smartsecureapp.Activity.adapter.CallAdapter;
 import com.smartsecureapp.Activity.api.APIInterface;
@@ -74,7 +76,7 @@ public class CallActivity extends AppCompatActivity {
         txt_term_condition.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Utils.term_and_conditions));
+                Intent browserIntent = new Intent(CallActivity.this, TermsConditionsActivity.class);
                 startActivity(browserIntent);
             }
         });
@@ -95,7 +97,11 @@ public class CallActivity extends AppCompatActivity {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(CallActivity.this);
+
+                Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
+                intent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE);
+                startActivityForResult(intent, 1);
+                /*BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(CallActivity.this);
                 bottomSheetDialog.setContentView(R.layout.add_contact_sheet);
                 TextView manualContact = bottomSheetDialog.findViewById(R.id.manualContact);
                 TextView pickContact = bottomSheetDialog.findViewById(R.id.pickContact);
@@ -103,6 +109,8 @@ public class CallActivity extends AppCompatActivity {
                 manualContact.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+
+
                         bottomSheetDialog.dismiss();
                         Dialog dialog = new Dialog(CallActivity.this, android.R.style.Theme_Dialog);
                         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -145,7 +153,7 @@ public class CallActivity extends AppCompatActivity {
                         bottomSheetDialog.dismiss();
                     }
                 });
-                bottomSheetDialog.show();
+                bottomSheetDialog.show();*/
             }
         });
 
@@ -156,8 +164,8 @@ public class CallActivity extends AppCompatActivity {
             }
         });
 
-        txt_privacy_policy.setPaintFlags(txt_privacy_policy.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-        txt_term_condition.setPaintFlags(txt_term_condition.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+      //  txt_privacy_policy.setPaintFlags(txt_privacy_policy.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+       // txt_term_condition.setPaintFlags(txt_term_condition.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
     }
 
@@ -169,11 +177,61 @@ public class CallActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<SmsContactApi> call, Response<SmsContactApi> response) {
                 if (response.body().getError() != null && !response.body().getError()){
-                    loading.setVisibility(View.INVISIBLE);
+                    loading.setVisibility(View.GONE);
                     onBackPressed();
 
                 }else {
-                    loading.setVisibility(View.INVISIBLE);
+                    loading.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SmsContactApi> call, Throwable t) {
+                loading.setVisibility(View.INVISIBLE);
+            }
+        });
+    }
+    private void AddWhatsContactApi() {
+        loading.setVisibility(View.VISIBLE);
+        apiInterface = RetrofitClient.getClient().create(APIInterface.class);
+        Call<SmsContactApi> call = apiInterface.whatsapp_contacts(Utils.whatsapp_contacts, getLoginApiFromShared(Utils.MySharedId), TextUtils.join(",", nameList), TextUtils.join(",", phoneList), TextUtils.join(",", orderList));
+        call.enqueue(new Callback<SmsContactApi>() {
+            @Override
+            public void onResponse(Call<SmsContactApi> call, Response<SmsContactApi> response) {
+                if (response.body().getError() != null && !response.body().getError()){
+                    AddSmsContactApi();
+
+                }else {
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SmsContactApi> call, Throwable t) {
+                loading.setVisibility(View.GONE);
+            }
+        });
+    }
+    private void AddSmsContactApi() {
+        apiInterface = RetrofitClient.getClient().create(APIInterface.class);
+        Call<SmsContactApi> call = apiInterface.sms_contacts(Utils.sms_contacts,getLoginApiFromShared(Utils.MySharedId), TextUtils.join(",",nameList),TextUtils.join(",",phoneList),TextUtils.join(",",orderList));
+        call.enqueue(new Callback<SmsContactApi>() {
+            @Override
+            public void onResponse(Call<SmsContactApi> call, Response<SmsContactApi> response) {
+                loading.setVisibility(View.GONE);
+                if (response.body().getError() != null && !response.body().getError()){
+
+
+                    new MaterialAlertDialogBuilder(CallActivity.this).setTitle("Alert!").setMessage("Contacts successfully added for call, whatsapp and sms.").setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+
+                        }
+                    }).show();
+
+
+                }else {
+                    loading.setVisibility(View.GONE);
                 }
             }
 
@@ -194,6 +252,29 @@ public class CallActivity extends AppCompatActivity {
                 loading.setVisibility(View.INVISIBLE);
                 if (response!=null && response.body()!=null && response.body().getContacts()!=null && !response.body().getContacts().isEmpty()) {
                     resetList(response);
+                }else {
+                    noContact.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GetCallContact> call, Throwable t) {
+                loading.setVisibility(View.INVISIBLE);
+            }
+        });
+    }
+
+    private void DeleteCallContactApi(int position) {
+        loading.setVisibility(View.VISIBLE);
+        apiInterface = RetrofitClient.getClient().create(APIInterface.class);
+        Call<GetCallContact> callGetSms = apiInterface.get_call_contacts(getLoginApiFromShared(Utils.MySharedId),Utils.deleteUser);
+        callGetSms.enqueue(new Callback<GetCallContact>() {
+            @Override
+            public void onResponse(Call<GetCallContact> call, Response<GetCallContact> response) {
+                loading.setVisibility(View.INVISIBLE);
+                if (response!=null && response.body()!=null && response.body().getContacts()!=null && !response.body().getContacts().isEmpty()) {
+                    smsContactDeleted(position, nameList);
+                   // resetList(response);
                 }else {
                     noContact.setVisibility(View.VISIBLE);
                 }
@@ -239,24 +320,61 @@ public class CallActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if ((requestCode == 1) && (resultCode == RESULT_OK)) {
-            Cursor cursor = null;
+
             try {
-                Uri uri = data.getData();
-                cursor = getContentResolver().query(uri, new String[] { ContactsContract.CommonDataKinds.Phone.NUMBER, ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME}, null, null, null);
-                if (cursor != null && cursor.moveToNext()) {
-                    String phone = cursor.getString(0);
-                    String name = cursor.getString(1);
-                    // Do something with phone
-                    Log.d("+++name+++",name);
-                    Log.d("+++phone+++",phone);
-                    nameList.add(name);
-                    phoneList.add(phone);
-                    orderList.add(String.valueOf(nameList.size()));
-                    if (nameList.size()==1){
-                        primaryNumber = phone;
-                    }
-                    setAdapter(nameList);
-                }
+
+               new MaterialAlertDialogBuilder(this).setTitle("Import").setMessage("Would you like to import these Contacts for Sms and Whatsapp also?")
+                       .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                           @Override
+                           public void onClick(DialogInterface dialogInterface, int i) {
+
+                               Cursor cursor = null;
+                               Uri uri = data.getData();
+                               cursor = getContentResolver().query(uri, new String[] { ContactsContract.CommonDataKinds.Phone.NUMBER, ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME}, null, null, null);
+                               if (cursor != null && cursor.moveToNext()) {
+                                   String phone = cursor.getString(0);
+                                   String name = cursor.getString(1);
+                                   // Do something with phone
+                                   Log.d("+++name+++",name);
+                                   Log.d("+++phone+++",phone);
+                                   nameList.add(name);
+                                   phoneList.add(phone);
+                                   orderList.add(String.valueOf(nameList.size()));
+                                   if (nameList.size()==1){
+                                       primaryNumber = phone;
+                                   }
+                                   setAdapter(nameList);
+                               }
+
+                               AddWhatsContactApi();
+
+                           }
+                       }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                           @Override
+                           public void onClick(DialogInterface dialogInterface, int i) {
+                               Cursor cursor = null;
+                               Uri uri = data.getData();
+                               cursor = getContentResolver().query(uri, new String[] { ContactsContract.CommonDataKinds.Phone.NUMBER, ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME}, null, null, null);
+                               if (cursor != null && cursor.moveToNext()) {
+                                   String phone = cursor.getString(0);
+                                   String name = cursor.getString(1);
+                                   // Do something with phone
+                                   Log.d("+++name+++",name);
+                                   Log.d("+++phone+++",phone);
+                                   nameList.add(name);
+                                   phoneList.add(phone);
+                                   orderList.add(String.valueOf(nameList.size()));
+                                   if (nameList.size()==1){
+                                       primaryNumber = phone;
+                                   }
+                                   setAdapter(nameList);
+                               }
+
+                           }
+                       }).show();
+
+
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -285,6 +403,8 @@ public class CallActivity extends AppCompatActivity {
             @Override
             public void onItemDelete(int position) {
                 smsContactDeleted(position, nameList);
+               // DeleteCallContactApi(position);
+
             }
 
             @Override
@@ -310,6 +430,10 @@ public class CallActivity extends AppCompatActivity {
         nameList.remove(position);
         phoneList.remove(position);
         orderList.remove(position);
+        /*if (nameList.isEmpty())
+        {
+            noContact.setVisibility(View.VISIBLE);
+        }*/
         setAdapter(nameList);
     }
 }

@@ -17,52 +17,57 @@
         android:layout_marginTop="30dp"
         android:text="@string/timer"
         android:textColor="@color/txt_red"
-        android:textSize="30dp"
+        android:textSize="25sp"
         android:textStyle="bold" />
 
     <TextView
         android:id="@+id/setTimer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_gravity="center"
-        android:layout_marginTop="40dp"
-        android:layout_marginRight="16dp"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/timeDisplay"
+        android:background="#F44336"
+        android:paddingLeft="15dp"
+        android:paddingTop="8dp"
+        android:layout_marginBottom="10dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="8dp"
         android:text="@string/set_timer"
-        android:textColor="@color/txt_red"
+        android:textColor="@color/white"
         android:textSize="15dp"
         android:textStyle="bold" />
 
     <TextView
         android:id="@+id/timeDisplay"
         android:layout_width="wrap_content"
+        android:layout_above="@+id/timePercentage"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_centerHorizontal="true"
         android:text="00:00"
         android:textColor="@color/white"
         android:textSize="40dp"
-        android:textStyle="bold"></TextView>
+        android:textStyle="bold"/>
 
     <TextView
         android:id="@+id/timePercentage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/timeDisplay"
+        android:layout_above="@+id/progressBar"
         android:layout_marginLeft="16dp"
         android:text="0%"
         android:textColor="@color/white"
         android:textSize="15dp"
-        android:textStyle="bold"></TextView>
+        android:textStyle="bold"/>
 
     <ProgressBar
         android:id="@+id/progressBar"
-        style="@android:style/Widget.ProgressBar.Horizontal"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/timePercentage"
+        android:layout_above="@+id/txt_emergency_one"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="10dp"
-        android:layout_marginRight="16dp"></ProgressBar>
+        android:layout_marginRight="16dp"/>
 
 
     <ImageView
@@ -77,26 +82,99 @@
         android:id="@+id/txt_emergency_one"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/progressBar"
+        android:layout_above="@+id/txt_emergency_two"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
         android:gravity="center"
         android:text="@string/timer_text"
         android:textColor="@color/white"
         android:textSize="13dp"
-        android:visibility="invisible" />
+        />
 
     <TextView
         android:id="@+id/txt_emergency_two"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/txt_emergency_one"
+        android:layout_above="@+id/ll"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="6dp"
         android:text="@string/timer_text_one"
         android:textColor="@color/white"
         android:textSize="13dp"
-        android:visibility="invisible" />
+        />
+
+    <LinearLayout
+        android:id="@+id/ll"
+        android:layout_above="@+id/stopTimer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/img_secure"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            android:src="@drawable/smart_secure_icon" />
+
+        <TextView
+            android:id="@+id/txt_copyright"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="@string/copyright"
+            android:textColor="@color/white"
+            android:textSize="13dp" />
+
+        <LinearLayout
+            android:id="@+id/Linear_policy_terms"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:layout_marginBottom="20dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/txt_privacy_policy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:visibility="gone"
+                android:text="@string/privacy_policy"
+                android:textColor="@color/txt_red"
+                android:textSize="12dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:gravity="center"
+                android:text="|"
+                android:visibility="gone"
+                android:textColor="@color/white"
+                android:textSize="12dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txt_term_condition"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/term_condition"
+                android:textColor="@color/txt_red"
+                android:textSize="12dp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/stopTimer"
@@ -104,16 +182,16 @@
         android:layout_height="55dp"
         android:layout_alignParentBottom="true"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         android:layout_marginRight="16dp"
-        android:layout_marginBottom="90dp"
+        android:layout_marginBottom="80dp"
         android:backgroundTint="@color/btn_red"
         android:text="Stop Timer"
         android:textAllCaps="true"
         android:textSize="14dp"
         android:textStyle="bold"
         android:visibility="invisible"
-        app:cornerRadius="30dp" />
+        app:cornerRadius="7dp" />
 
     <ProgressBar
         android:id="@+id/loading"

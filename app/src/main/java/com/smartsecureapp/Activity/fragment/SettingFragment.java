@@ -3,12 +3,14 @@ package com.smartsecureapp.Activity.fragment;
 import static android.content.Context.MODE_PRIVATE;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -23,6 +25,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.smartsecureapp.Activity.activity.ActivityEmailContact;
@@ -32,16 +35,22 @@ import com.smartsecureapp.Activity.activity.CallActivity;
 import com.smartsecureapp.Activity.activity.ContactUsActivity;
 import com.smartsecureapp.Activity.activity.DeleteAccountActivity;
 import com.smartsecureapp.Activity.activity.HistoryActivity;
+import com.smartsecureapp.Activity.activity.OtpDeleteAccountActivity;
+import com.smartsecureapp.Activity.activity.OtpSignoutActivity;
 import com.smartsecureapp.Activity.activity.PasswordResetActivity;
 import com.smartsecureapp.Activity.activity.PersonalActivity;
+import com.smartsecureapp.Activity.activity.PrivacyPolicyActivity;
 import com.smartsecureapp.Activity.activity.SMSActivity;
 import com.smartsecureapp.Activity.activity.SignInActivity;
 import com.smartsecureapp.Activity.activity.SignOutActivity;
 import com.smartsecureapp.Activity.activity.SignUpActivity;
+import com.smartsecureapp.Activity.activity.TermsConditionsActivity;
 import com.smartsecureapp.Activity.api.APIInterface;
 import com.smartsecureapp.Activity.api.RetrofitClient;
+import com.smartsecureapp.Activity.model.SendOtpModel;
 import com.smartsecureapp.Activity.model.SirenModel;
 import com.smartsecureapp.Activity.model.UpdateProfile;
+import com.smartsecureapp.Activity.util.ProgressHelper;
 import com.smartsecureapp.Activity.util.Utils;
 import com.smartsecureapp.R;
 
@@ -52,16 +61,17 @@ import retrofit2.Response;
 public class SettingFragment extends Fragment {
 
     RelativeLayout relative_personal,relative_Call,relative_Email,relative_whatsApp,relative_sms,rootLayout,
-    relative_history,relative_password_reset,relative_contact_us,relative_sign_out,relative_delete_account;
+    relative_history,relative_password_reset,relative_contact_us,relative_sign_out,relative_delete_account,privacy_policy;
     TextView txt_privacy_policy,txt_term_condition;
-    Switch simpleSwitch2;
+    SwitchCompat simpleSwitch2;
     APIInterface apiInterface;
-    ProgressBar loading;
+    ProgressHelper loading;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.fragment_setting, container, false);
 
+        loading = new ProgressHelper();
         relative_personal = view.findViewById(R.id.relative_personal);
         relative_Call = view.findViewById(R.id.relative_Call);
         relative_Email = view.findViewById(R.id.relative_Email);
@@ -72,21 +82,21 @@ public class SettingFragment extends Fragment {
         relative_contact_us = view.findViewById(R.id.relative_contact_us);
         relative_sign_out = view.findViewById(R.id.relative_sign_out);
         relative_delete_account = view.findViewById(R.id.relative_delete_account);
+        privacy_policy = view.findViewById(R.id.relative_privacypolicy);
 
         txt_privacy_policy = view.findViewById(R.id.txt_privacy_policy);
         txt_term_condition = view.findViewById(R.id.txt_term_condition);
         txt_term_condition.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Utils.term_and_conditions));
+                Intent browserIntent = new Intent(getActivity(), TermsConditionsActivity.class);
                 startActivity(browserIntent);
             }
         });
 
-        txt_privacy_policy.setPaintFlags(txt_privacy_policy.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-        txt_term_condition.setPaintFlags(txt_term_condition.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+       // txt_privacy_policy.setPaintFlags(txt_privacy_policy.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+      //  txt_term_condition.setPaintFlags(txt_term_condition.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         simpleSwitch2 = view.findViewById(R.id.simpleSwitch2);
-        loading = view.findViewById(R.id.loading);
         rootLayout = view.findViewById(R.id.rootLayout);
 
         getSirenValue();
@@ -148,36 +158,45 @@ public class SettingFragment extends Fragment {
                 startActivity(new Intent(getActivity(), ContactUsActivity.class));
             }
         });
+        privacy_policy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), PrivacyPolicyActivity.class));
+            }
+        });
         relative_sign_out.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                signOutFromShared();
-                startActivity(new Intent(getActivity(), SignInActivity.class));
-                getActivity().finish();
+
+                new MaterialAlertDialogBuilder(getActivity()).setTitle("Sign Out").setMessage("Are you sure you want to sign out?")
+                                .setPositiveButton("Yes", (dialogInterface, i) -> {
+                                    sendOtpEmail("2");
+                                    dialogInterface.dismiss();
+                                }).setNegativeButton("Cancel",(dialogInterface,i) ->{
+
+
+                                    dialogInterface.dismiss();
+
+                        }).show();
+
             }
         });
         relative_delete_account.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Dialog dialog = new Dialog(getContext(), android.R.style.Theme_Dialog);
-                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                dialog.setContentView(R.layout.dlg_delete_account);
-                dialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                MaterialButton cancelButton = (MaterialButton) dialog.findViewById(R.id.cancelButton);
-                MaterialButton doneButton = (MaterialButton) dialog.findViewById(R.id.confirmButton);
-                doneButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        deleteAccountApi();
-                    }
-                });
-                cancelButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        dialog.dismiss();
-                    }
-                });
-                dialog.show();
+
+                new MaterialAlertDialogBuilder(getActivity()).setTitle("Delete Account").setMessage("Are you sure you want to Delete your account? You will loose all data. This action is not reversible.")
+                        .setPositiveButton("Yes", (dialogInterface, i) -> {
+                            sendOtpEmail("3");
+                            dialogInterface.dismiss();
+                        }).setNegativeButton("Cancel",(dialogInterface,i) ->{
+
+
+                            dialogInterface.dismiss();
+
+                        }).show();
+
+
             }
         });
 
@@ -185,36 +204,41 @@ public class SettingFragment extends Fragment {
         return view;
     }
 
-    private void deleteAccountApi(){
-        loading.setVisibility(View.VISIBLE);
+    private void sendOtpEmail(String callType){
+        loading.showDialog(getActivity(),"Please Wait...");
         apiInterface = RetrofitClient.getClient().create(APIInterface.class);
-        Call<UpdateProfile> callDeleteAccount = apiInterface.deleteUser(Utils.deleteUser,getLoginApiFromShared(Utils.MySharedId));
-        callDeleteAccount.enqueue(new Callback<UpdateProfile>() {
+        Call<SendOtpModel> callDeleteAccount = apiInterface.send_otp_email(getLoginApiFromShared(Utils.MySharedEmail),Utils.send_otp_email,getLoginApiFromShared(Utils.MySharedId),callType);
+        callDeleteAccount.enqueue(new Callback<SendOtpModel>() {
             @Override
-            public void onResponse(Call<UpdateProfile> call, Response<UpdateProfile> response) {
-                loading.setVisibility(View.INVISIBLE);
-                if (response != null && response.body() != null && !response.body().getError()) {
-                    signOutFromShared();
-                    startActivity(new Intent(getActivity(), SignUpActivity.class));
-                    getActivity().finish();
+            public void onResponse(Call<SendOtpModel> call, Response<SendOtpModel> response) {
+                loading.dismissDialog();
+                if (response != null && response.body() != null && !response.body().isError()) {
+
+                    if (callType.equals("2"))
+                    startActivity(new Intent(getActivity(), OtpSignoutActivity.class));
+                    else
+                        startActivity(new Intent(getActivity(), OtpDeleteAccountActivity.class));
+
                 } else {
                     showSnackBar(response.body().getAlert());
                 }
             }
 
             @Override
-            public void onFailure(Call<UpdateProfile> call, Throwable t) {
-                loading.setVisibility(View.INVISIBLE);
+            public void onFailure(Call<SendOtpModel> call, Throwable t) {
+                loading.dismissDialog();
             }
         });
     }
 
     private void getSirenValue() {
+        loading.showDialog(getActivity(),"Please Wait...");
         apiInterface = RetrofitClient.getClient().create(APIInterface.class);
         Call<SirenModel> call = apiInterface.get_user_settings(Utils.get_user_settings,getLoginApiFromShared(Utils.MySharedId));
         call.enqueue(new Callback<SirenModel>() {
             @Override
             public void onResponse(Call<SirenModel> call, Response<SirenModel> response) {
+                loading.dismissDialog();
                 if (response!=null && !response.body().getError() && response.body().getSiren().equalsIgnoreCase("1")){
                     simpleSwitch2.setChecked(true);
                 }else {
@@ -224,6 +248,7 @@ public class SettingFragment extends Fragment {
 
             @Override
             public void onFailure(Call<SirenModel> call, Throwable t) {
+                loading.dismissDialog();
                 simpleSwitch2.setChecked(false);
             }
         });
@@ -234,17 +259,19 @@ public class SettingFragment extends Fragment {
         if (b){
             sirenValue = "1";
         }
+        loading.showDialog(getActivity(),"Please Wait...");
         apiInterface = RetrofitClient.getClient().create(APIInterface.class);
         Call<UpdateProfile> call = apiInterface.user_settings_update(Utils.user_settings_update,getLoginApiFromShared(Utils.MySharedId),sirenValue,"");
         call.enqueue(new Callback<UpdateProfile>() {
             @Override
             public void onResponse(Call<UpdateProfile> call, Response<UpdateProfile> response) {
-                getSirenValue();
+               // getSirenValue();
+                loading.dismissDialog();
             }
 
             @Override
             public void onFailure(Call<UpdateProfile> call, Throwable t) {
-                getSirenValue();
+            //    getSirenValue();
             }
         });
     }

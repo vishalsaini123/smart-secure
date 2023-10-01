@@ -18,7 +18,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -47,7 +49,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ActivityHistory extends AppCompatActivity {
-    TextView txt_privacy_policy,txt_term_condition,noContact;
+    TextView txt_privacy_policy, txt_term_condition, noContact;
     ImageView img_back;
 
     ImageView addButton;
@@ -55,6 +57,8 @@ public class ActivityHistory extends AppCompatActivity {
     ArrayList<String> phoneList = new ArrayList<>();
     ArrayList<String> orderList = new ArrayList<>();
     private static final int REQUEST_READ_CONTACTS_PERMISSION = 0;
+    private static final int REQUEST_PERMISSION_WRITE_EXTERNAL_STORAGE = 101;
+
     RecyclerView contactRecyclerView;
     MaterialButton addContactButton;
     ProgressBar loading;
@@ -67,13 +71,13 @@ public class ActivityHistory extends AppCompatActivity {
 
 
         requestContactsPermission();
-
+        checkAndRequestPermission();
         txt_privacy_policy = findViewById(R.id.txt_privacy_policy);
         txt_term_condition = findViewById(R.id.txt_term_condition);
         txt_term_condition.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Utils.term_and_conditions));
+                Intent browserIntent = new Intent(ActivityHistory.this, TermsConditionsActivity.class);
                 startActivity(browserIntent);
             }
         });
@@ -95,8 +99,8 @@ public class ActivityHistory extends AppCompatActivity {
         });
 
 
-        txt_privacy_policy.setPaintFlags(txt_privacy_policy.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-        txt_term_condition.setPaintFlags(txt_term_condition.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+       // txt_privacy_policy.setPaintFlags(txt_privacy_policy.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+       // txt_term_condition.setPaintFlags(txt_term_condition.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
     }
 
     private void clickListeners() {
@@ -130,16 +134,16 @@ public class ActivityHistory extends AppCompatActivity {
                         doneButton.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                if (!nameEditText.getText().toString().isEmpty() && !phoneEditText.getText().toString().isEmpty()){
+                                if (!nameEditText.getText().toString().isEmpty() && !phoneEditText.getText().toString().isEmpty()) {
                                     nameList.add(nameEditText.getText().toString());
                                     phoneList.add(phoneEditText.getText().toString());
                                     orderList.add(String.valueOf(nameList.size()));
                                     setAdapter(nameList);
                                     dialog.dismiss();
-                                }else {
-                                    if (nameEditText.getText().toString().isEmpty()){
+                                } else {
+                                    if (nameEditText.getText().toString().isEmpty()) {
                                         nameEditText.setError("All fields are required.");
-                                    }else if (phoneEditText.getText().toString().isEmpty()){
+                                    } else if (phoneEditText.getText().toString().isEmpty()) {
                                         phoneEditText.setError("All fields are required.");
                                     }
                                 }
@@ -166,15 +170,15 @@ public class ActivityHistory extends AppCompatActivity {
     private void sendSmsContactApi() {
         loading.setVisibility(View.VISIBLE);
         apiInterface = RetrofitClient.getClient().create(APIInterface.class);
-        Call<SmsContactApi> call = apiInterface.sms_contacts(Utils.sms_contacts,getLoginApiFromShared(Utils.MySharedId), TextUtils.join(",",nameList),TextUtils.join(",",phoneList),TextUtils.join(",",orderList));
+        Call<SmsContactApi> call = apiInterface.sms_contacts(Utils.sms_contacts, getLoginApiFromShared(Utils.MySharedId), TextUtils.join(",", nameList), TextUtils.join(",", phoneList), TextUtils.join(",", orderList));
         call.enqueue(new Callback<SmsContactApi>() {
             @Override
             public void onResponse(Call<SmsContactApi> call, Response<SmsContactApi> response) {
-                if (response.body().getError() != null && !response.body().getError()){
+                if (response.body().getError() != null && !response.body().getError()) {
                     loading.setVisibility(View.INVISIBLE);
                     onBackPressed();
 
-                }else {
+                } else {
                     loading.setVisibility(View.INVISIBLE);
                 }
             }
@@ -186,15 +190,15 @@ public class ActivityHistory extends AppCompatActivity {
         });
     }
 
-    private void getHistoryApi(){
+    private void getHistoryApi() {
         loading.setVisibility(View.VISIBLE);
         apiInterface = RetrofitClient.getClient().create(APIInterface.class);
-        Call<GetHistory> callHistory = apiInterface.fetchHistory(getLoginApiFromShared(Utils.MySharedId),Utils.fetchHistory);
+        Call<GetHistory> callHistory = apiInterface.fetchHistory(getLoginApiFromShared(Utils.MySharedId), Utils.fetchHistory);
         callHistory.enqueue(new Callback<GetHistory>() {
             @Override
             public void onResponse(Call<GetHistory> call, Response<GetHistory> response) {
                 loading.setVisibility(View.INVISIBLE);
-                if (response!=null && response.body()!=null && !response.body().getData().isEmpty()) {
+                if (response != null && response.body() != null && response.body().getData() != null && !response.body().getData().isEmpty()) {
                     resetHistoryList(response);
                 }
             }
@@ -209,12 +213,12 @@ public class ActivityHistory extends AppCompatActivity {
     private void getSmsContactApi() {
         loading.setVisibility(View.VISIBLE);
         apiInterface = RetrofitClient.getClient().create(APIInterface.class);
-        Call<GetSmsContact> callGetSms = apiInterface.get_sms_contacts(getLoginApiFromShared(Utils.MySharedId),Utils.get_sms_contacts);
+        Call<GetSmsContact> callGetSms = apiInterface.get_sms_contacts(getLoginApiFromShared(Utils.MySharedId), Utils.get_sms_contacts);
         callGetSms.enqueue(new Callback<GetSmsContact>() {
             @Override
             public void onResponse(Call<GetSmsContact> call, Response<GetSmsContact> response) {
                 loading.setVisibility(View.INVISIBLE);
-                if (response!=null && response.body()!=null && !response.body().getContacts().isEmpty()) {
+                if (response != null && response.body() != null && !response.body().getContacts().isEmpty()) {
                     resetList(response);
                 }
             }
@@ -230,19 +234,19 @@ public class ActivityHistory extends AppCompatActivity {
         nameList.clear();
         phoneList.clear();
         orderList.clear();
-        if (response!=null && response.body()!=null && !response.body().getData().isEmpty()) {
+        if (response != null && response.body() != null && !response.body().getData().isEmpty()) {
             for (int i = 0; i < response.body().getData().size(); i++) {
-                if (response.body().getData().get(i).getAudio().length()>0) {
+                if (response.body().getData().get(i).getAudio().length() > 0) {
                     nameList.add(response.body().getData().get(i).getAudio());
                 }
             }
             if (!nameList.isEmpty()) {
                 setAdapter(nameList);
                 noContact.setVisibility(View.GONE);
-            }else {
+            } else {
                 noContact.setVisibility(View.VISIBLE);
             }
-        }else {
+        } else {
             noContact.setVisibility(View.VISIBLE);
         }
     }
@@ -251,9 +255,9 @@ public class ActivityHistory extends AppCompatActivity {
         nameList.clear();
         phoneList.clear();
         orderList.clear();
-        if (response!=null && response.body()!=null && !response.body().getContacts().isEmpty()) {
+        if (response != null && response.body() != null && !response.body().getContacts().isEmpty()) {
             for (int i = 0; i < response.body().getContacts().size(); i++) {
-                if (response.body().getContacts().get(i).getName().length()>0 && response.body().getContacts().get(i).getPhone().length()>0) {
+                if (response.body().getContacts().get(i).getName().length() > 0 && response.body().getContacts().get(i).getPhone().length() > 0) {
                     nameList.add(response.body().getContacts().get(i).getName());
                     phoneList.add(response.body().getContacts().get(i).getPhone());
                     orderList.add(String.valueOf(i + 1));
@@ -262,10 +266,10 @@ public class ActivityHistory extends AppCompatActivity {
             if (!nameList.isEmpty()) {
                 setAdapter(nameList);
                 noContact.setVisibility(View.GONE);
-            }else {
+            } else {
                 noContact.setVisibility(View.VISIBLE);
             }
-        }else {
+        } else {
             noContact.setVisibility(View.VISIBLE);
         }
     }
@@ -277,7 +281,7 @@ public class ActivityHistory extends AppCompatActivity {
             Cursor cursor = null;
             try {
                 Uri uri = data.getData();
-                cursor = getContentResolver().query(uri, new String[] { ContactsContract.CommonDataKinds.Phone.NUMBER, ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME}, null, null, null);
+                cursor = getContentResolver().query(uri, new String[]{ContactsContract.CommonDataKinds.Phone.NUMBER, ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME}, null, null, null);
                 if (cursor != null && cursor.moveToNext()) {
                     String phone = cursor.getString(0);
                     String name = cursor.getString(1);
@@ -291,21 +295,20 @@ public class ActivityHistory extends AppCompatActivity {
             }
         }
     }
-    private void requestContactsPermission()
-    {
-        if (!hasContactsPermission())
-        {
+
+    private void requestContactsPermission() {
+        if (!hasContactsPermission()) {
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.READ_CONTACTS}, REQUEST_READ_CONTACTS_PERMISSION);
         }
     }
-    private boolean hasContactsPermission()
-    {
+
+    private boolean hasContactsPermission() {
         return ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) ==
                 PackageManager.PERMISSION_GRANTED;
     }
 
-    public void setAdapter(ArrayList<String> nameList){
+    public void setAdapter(ArrayList<String> nameList) {
         contactRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         HistoryAdapter callAdapter = new HistoryAdapter(nameList, new SmsCallback() {
             @Override
@@ -323,9 +326,32 @@ public class ActivityHistory extends AppCompatActivity {
         setAdapter(nameList);
     }
 
-    private String getLoginApiFromShared(String key){
-        SharedPreferences sharedPreferences = getSharedPreferences(Utils.MyPref,MODE_PRIVATE);
+    private String getLoginApiFromShared(String key) {
+        SharedPreferences sharedPreferences = getSharedPreferences(Utils.MyPref, MODE_PRIVATE);
         String value = sharedPreferences.getString(key, "");
         return value;
+    }
+
+    private void checkAndRequestPermission() {
+        int writePermission = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        if (writePermission == PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(this, "Write Permission required for the download feature", Toast.LENGTH_SHORT).show();
+        } else {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    REQUEST_PERMISSION_WRITE_EXTERNAL_STORAGE);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_PERMISSION_WRITE_EXTERNAL_STORAGE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            } else {
+                // Permission denied, handle accordingly
+                Toast.makeText(this, "Write Permission required for the download feature", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }

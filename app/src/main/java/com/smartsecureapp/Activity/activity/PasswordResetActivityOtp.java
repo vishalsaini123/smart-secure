@@ -17,6 +17,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.smartsecureapp.Activity.api.APIInterface;
 import com.smartsecureapp.Activity.api.RetrofitClient;
+import com.smartsecureapp.Activity.model.LoginApi;
 import com.smartsecureapp.Activity.model.SmsContactApi;
 import com.smartsecureapp.Activity.util.Utils;
 import com.smartsecureapp.R;
@@ -61,7 +62,7 @@ public class PasswordResetActivityOtp extends AppCompatActivity {
         txt_term_condition.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Utils.term_and_conditions));
+                Intent browserIntent = new Intent(PasswordResetActivityOtp.this, TermsConditionsActivity.class);
                 startActivity(browserIntent);
             }
         });
@@ -74,8 +75,8 @@ public class PasswordResetActivityOtp extends AppCompatActivity {
             }
         });
 
-        txt_privacy_policy.setPaintFlags(txt_privacy_policy.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-        txt_term_condition.setPaintFlags(txt_term_condition.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+       // txt_privacy_policy.setPaintFlags(txt_privacy_policy.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+      //  txt_term_condition.setPaintFlags(txt_term_condition.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
     }
 
     private void showSnackBar(String msg) {
@@ -99,9 +100,12 @@ public class PasswordResetActivityOtp extends AppCompatActivity {
             public void onResponse(Call<SmsContactApi> call, Response<SmsContactApi> response) {
                 if (response.body().getError() != null && !response.body().getError()){
                     loading.setVisibility(View.INVISIBLE);
-                    signOutFromShared();
-                    startActivity(new Intent(PasswordResetActivityOtp.this, SignInActivity.class));
-                    finish();
+
+                    setLoginApiToShared(passwordOne.getText().toString());
+                    Intent intent = new Intent(PasswordResetActivityOtp.this, MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+
 
                 }else {
                     loading.setVisibility(View.INVISIBLE);
@@ -114,13 +118,19 @@ public class PasswordResetActivityOtp extends AppCompatActivity {
             }
         });
     }
+
+    private void setLoginApiToShared( String passwordString) {
+            SharedPreferences sharedPreferences = getSharedPreferences(Utils.MyPref, MODE_PRIVATE);
+            SharedPreferences.Editor prefsEditor = sharedPreferences.edit();
+            prefsEditor.putString(Utils.MySharedPassword, passwordString);
+            prefsEditor.apply();
+
+    }
+
     private String getLoginApiFromShared(String key){
         SharedPreferences sharedPreferences = getSharedPreferences(Utils.MyPref,MODE_PRIVATE);
         String value = sharedPreferences.getString(key, "");
         return value;
     }
-    private void signOutFromShared() {
-        SharedPreferences sharedPreferences = this.getSharedPreferences(Utils.MyPref, MODE_PRIVATE);
-        sharedPreferences.edit().clear().commit();
-    }
+
 }

@@ -7,7 +7,9 @@
     <color name="teal_700">#ec1f25</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="txt_red">#d82229</color>
-    <color name="btn_red">#ec1f25</color>
+    <color name="txt_red">#F12522</color>
+    <color name="btn_red">#F82326</color>
     <color name="grey">#8b8b8b</color>
+    <color name="dialogBackground">#E3E6EC</color>
+    <color name="dialogButtons">#366EC9</color>
 </resources>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_checked="false">
+        <shape android:shape="oval">
+            <solid android:color="@color/btn_red" />
+            <size android:width="25dp" android:height="25dp" />
+            <stroke android:width="2dp" android:color="@color/btn_red" />
+        </shape> <!-- shape circle -->
+    </item>
+</selector>

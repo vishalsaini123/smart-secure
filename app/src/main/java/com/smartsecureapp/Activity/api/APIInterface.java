@@ -1,11 +1,14 @@
 package com.smartsecureapp.Activity.api;
 import com.smartsecureapp.Activity.adapter.SmsAdapter;
+import com.smartsecureapp.Activity.model.CommonModel;
 import com.smartsecureapp.Activity.model.GetCallContact;
 import com.smartsecureapp.Activity.model.GetEmailContact;
 import com.smartsecureapp.Activity.model.GetHistory;
 import com.smartsecureapp.Activity.model.GetSmsContact;
 import com.smartsecureapp.Activity.model.GetUserProfile;
 import com.smartsecureapp.Activity.model.LoginApi;
+import com.smartsecureapp.Activity.model.SendCallNotification;
+import com.smartsecureapp.Activity.model.SendOtpModel;
 import com.smartsecureapp.Activity.model.SirenModel;
 import com.smartsecureapp.Activity.model.SmsContactApi;
 import com.smartsecureapp.Activity.model.UpdateProfile;
@@ -32,7 +35,8 @@ public interface APIInterface {
     Call<LoginApi> login(
             @Field("email") String email,
             @Field("func") String func,
-            @Field("password") String password
+            @Field("password") String password,
+            @Field("deviceid") String deviceId
 
     );
 
@@ -47,7 +51,8 @@ public interface APIInterface {
             @Field("gender") String gender,
             @Field("phone") String phone,
             @Field("role") String role,
-            @Field("location") String location
+            @Field("location") String location,
+            @Field("deviceid") String deviceId
 
     );
 
@@ -57,6 +62,25 @@ public interface APIInterface {
             @Field("email") String email,
             @Field("func") String forgot_password_second,
             @Field("code") String code
+
+    );
+
+    @FormUrlEncoded
+    @POST(baseUrlSuffix)
+    Call<SendOtpModel> verify_otp_email(
+            @Field("user_id") String user_id,
+            @Field("func") String forgot_password_second,
+            @Field("code") String code
+
+    );
+
+    @FormUrlEncoded
+    @POST(baseUrlSuffix)
+    Call<SendOtpModel> send_otp_email(
+            @Field("email") String email,
+            @Field("func") String forgot_password_second,
+            @Field("user_id") String user_id,
+            @Field("callType") String callType
 
     );
 
@@ -196,6 +220,29 @@ public interface APIInterface {
             @Field("user_id") String user_id
 
     );
+    @FormUrlEncoded
+    @POST(baseUrlSuffix)
+    Call<CommonModel> emergency(
+            @Field("func") String func,
+            @Field("user_id") String user_id,
+            @Field("location") String location
+
+
+
+    );
+    @FormUrlEncoded
+    @POST(baseUrlSuffix)
+    Call<CommonModel> timerApi(
+            @Field("func") String func,
+            @Field("user_id") String user_id,
+            @Field("location") String location,
+            @Field("start_time") String start_time,
+            @Field("duration") String duration,
+            @Field("end_time") String end_time,
+            @Field("start") String start
+
+
+    );
 
     @FormUrlEncoded
     @POST(baseUrlSuffix)
@@ -220,6 +267,16 @@ public interface APIInterface {
             @Field("func") String func,
             @Field("phone_number") String phone_number,
             @Field("message") String message
+
+    );
+
+    @FormUrlEncoded
+    @POST(baseUrlSuffix)
+    Call<SendCallNotification> send_notification(
+            @Field("user_id") String user_id,
+            @Field("func") String func,
+            @Field("name") String name,
+            @Field("location") String location
 
     );
 

@@ -12,6 +12,7 @@ import android.widget.ProgressBar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.chaos.view.PinView;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.smartsecureapp.Activity.api.APIInterface;
@@ -28,7 +29,7 @@ import retrofit2.Response;
 public class OtpPasswordActivity extends AppCompatActivity {
 
     ImageView img_back;
-    EditText otp;
+    PinView otp;
     MaterialButton submitButton;
     ProgressBar loading;
     String email,password;
@@ -67,7 +68,7 @@ public class OtpPasswordActivity extends AppCompatActivity {
         loading.setVisibility(View.VISIBLE);
         hideKeyboard();
         apiInterface = RetrofitClient.getClient().create(APIInterface.class);
-        Call<SmsContactApi> call = apiInterface.forgot_password_second(email, Utils.forgot_password_second,otp.getText().toString());
+        Call<SmsContactApi> call = apiInterface.forgot_password_second(email, Utils.forgot_password_second,otp.getText().toString().trim());
         call.enqueue(new Callback<SmsContactApi>() {
             @Override
             public void onResponse(Call<SmsContactApi> call, Response<SmsContactApi> response) {
@@ -92,7 +93,7 @@ public class OtpPasswordActivity extends AppCompatActivity {
         loading.setVisibility(View.VISIBLE);
         hideKeyboard();
         apiInterface = RetrofitClient.getClient().create(APIInterface.class);
-        Call<LoginApi> call = apiInterface.login(email,Utils.login,password);
+        Call<LoginApi> call = apiInterface.login(email,Utils.login,password,"");
         call.enqueue(new Callback<LoginApi>() {
             @Override
             public void onResponse(Call<LoginApi> call, Response<LoginApi> response) {

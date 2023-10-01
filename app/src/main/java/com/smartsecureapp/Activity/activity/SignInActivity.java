@@ -53,7 +53,7 @@ public class SignInActivity extends AppCompatActivity {
         txt_term_condition.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Utils.term_and_conditions));
+                Intent browserIntent = new Intent(SignInActivity.this, TermsConditionsActivity.class);
                 startActivity(browserIntent);
             }
         });
@@ -68,8 +68,8 @@ public class SignInActivity extends AppCompatActivity {
             }
         });
 
-        txt_privacy_policy.setPaintFlags(txt_privacy_policy.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-        txt_term_condition.setPaintFlags(txt_term_condition.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+       // txt_privacy_policy.setPaintFlags(txt_privacy_policy.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+       // txt_term_condition.setPaintFlags(txt_term_condition.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,10 +96,10 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     private void loginApiCall() {
-        loading.setVisibility(View.VISIBLE);
+            loading.setVisibility(View.VISIBLE);
         hideKeyboard();
         apiInterface = RetrofitClient.getClient().create(APIInterface.class);
-        Call<LoginApi> call = apiInterface.login(email.getText().toString(),Utils.login,password.getText().toString());
+        Call<LoginApi> call = apiInterface.login(email.getText().toString(),Utils.login,password.getText().toString(),getLoginApiFromShared(Utils.MyDeviceToken));
         call.enqueue(new Callback<LoginApi>() {
             @Override
             public void onResponse(Call<LoginApi> call, Response<LoginApi> response) {
@@ -143,6 +143,7 @@ public class SignInActivity extends AppCompatActivity {
 
     private void loggedIn() {
         startActivity(new Intent(SignInActivity.this, MainActivity.class));
+        finish();
     }
 
     private void setLoginApiToShared(Response<LoginApi> response, String passwordString) {

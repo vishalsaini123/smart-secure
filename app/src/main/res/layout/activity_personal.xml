@@ -52,20 +52,20 @@
             <RelativeLayout
                 android:id="@+id/relative_first_name"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
                 android:background="@drawable/border_shap">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:id="@+id/firstName"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_marginStart="13dp"
                     android:hint="@string/first_name"
-                    android:id="@+id/firstName"
-                    android:textColorHint="@color/btn_red"
-                    android:layout_centerVertical="true"
-                    android:textStyle="bold"
                     android:textColor="@color/txt_red"
-                    android:textSize="16dp" />
+                    android:backgroundTint="@android:color/transparent"
+                    android:textColorHint="@color/btn_red"
+                    android:textSize="16dp"
+                    android:textStyle="normal" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -81,58 +81,61 @@
             <RelativeLayout
                 android:id="@+id/relative_last_name"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginTop="8dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:background="@drawable/border_shap">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:id="@+id/lastName"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:backgroundTint="@android:color/transparent"
+
+                    android:layout_centerVertical="true"
                     android:layout_marginStart="13dp"
                     android:hint="@string/last_name"
-                    android:id="@+id/lastName"
-                    android:textColorHint="@color/btn_red"
-                    android:layout_centerVertical="true"
-                    android:textStyle="bold"
                     android:textColor="@color/txt_red"
-                    android:textSize="16dp" />
+                    android:textColorHint="@color/btn_red"
+                    android:textSize="16dp"
+                    android:textStyle="normal" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
-                    android:visibility="gone"
-                    android:src="@drawable/edit_icon"
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="30dp"
+                    android:src="@drawable/edit_icon"
+                    android:visibility="gone"
                     app:tint="@color/txt_red" />
 
             </RelativeLayout>
+
             <RelativeLayout
                 android:id="@+id/relative_phone"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginTop="8dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:background="@drawable/border_shap">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:id="@+id/country"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:backgroundTint="@android:color/transparent"
                     android:layout_marginStart="13dp"
                     android:hint="@string/country"
-                    android:id="@+id/country"
-                    android:textColorHint="@color/btn_red"
-                    android:layout_centerVertical="true"
-                    android:textStyle="bold"
                     android:textColor="@color/txt_red"
-                    android:textSize="16dp" />
+                    android:textColorHint="@color/btn_red"
+                    android:textSize="16dp"
+                    android:textStyle="normal" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
-                    android:visibility="gone"
-                    android:src="@drawable/edit_icon"
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="30dp"
+                    android:src="@drawable/edit_icon"
+                    android:visibility="gone"
                     app:tint="@color/txt_red" />
 
             </RelativeLayout>
@@ -140,153 +143,158 @@
             <RelativeLayout
                 android:id="@+id/relative_email"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginTop="8dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:background="@drawable/border_shap">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:id="@+id/phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:backgroundTint="@android:color/transparent"
+                    android:layout_centerVertical="true"
                     android:layout_marginStart="13dp"
                     android:hint="@string/phone"
-                    android:id="@+id/phone"
-                    android:textColorHint="@color/btn_red"
-                    android:layout_centerVertical="true"
-                    android:textStyle="bold"
                     android:textColor="@color/txt_red"
-                    android:textSize="16dp" />
+                    android:textColorHint="@color/btn_red"
+                    android:textSize="16dp"
+                    android:textStyle="normal" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
-                    android:visibility="gone"
-                    android:src="@drawable/edit_icon"
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="30dp"
+                    android:src="@drawable/edit_icon"
+                    android:visibility="gone"
                     app:tint="@color/txt_red" />
 
             </RelativeLayout>
+
             <RelativeLayout
                 android:id="@+id/relative_city"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/border_shap">
+                android:layout_marginTop="16dp">
 
                 <TextView
+                    android:id="@+id/genderText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="13dp"
-                    android:text="@string/gender"
-                    android:id="@+id/genderText"
-                    android:textStyle="bold"
                     android:layout_marginTop="10dp"
-                    android:textColor="@color/txt_red"
-                    android:textSize="16dp" />
+                    android:text="@string/gender"
+                    android:textColor="@color/white"
+                    android:textSize="16dp"
+                    android:textStyle="normal" />
 
-                <ImageView
+                <TextView
+                    android:layout_marginTop="10dp"
                     android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:src="@drawable/edit_icon"
-                    android:visibility="gone"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="30dp"
-                    app:tint="@color/txt_red" />
+                    android:layout_marginEnd="13dp"
+                    android:text="(Optional)"
+                    android:textColor="@color/white"
+                    />
+
                 <LinearLayout
+                    android:layout_marginTop="5dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/genderText"
                     android:orientation="horizontal">
-                    <CheckBox
-                        android:layout_width="wrap_content"
-                        android:id="@+id/male"
-                        android:layout_height="wrap_content">
-                    </CheckBox>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/male"
-                        android:textStyle="bold"
-                        android:textColor="@color/txt_red"
-                        android:textSize="16dp" />
-                    <CheckBox
-                        android:layout_width="wrap_content"
-                        android:id="@+id/female"
-                        android:layout_height="wrap_content">
-                    </CheckBox>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/female"
-                        android:textStyle="bold"
-                        android:textColor="@color/txt_red"
-                        android:textSize="16dp" />
-                    <CheckBox
-                        android:layout_width="wrap_content"
-                        android:id="@+id/other"
-                        android:layout_height="wrap_content">
-                    </CheckBox>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/other"
-                        android:textStyle="bold"
-                        android:textColor="@color/txt_red"
-                        android:textSize="16dp" />
+
+                   <RadioGroup
+                       android:orientation="horizontal"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content">
+
+                       <RadioButton
+                           android:paddingStart="5dp"
+
+                           android:text="Male"
+                           android:textColor="@color/white"
+                           android:id="@+id/male"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"/>
+
+
+                       <RadioButton
+                           android:paddingStart="5dp"
+                           android:layout_marginStart="10dp"
+                           android:text="Female"
+                           android:textColor="@color/white"
+                           android:id="@+id/female"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"/>
+
+
+                       <RadioButton
+                           android:layout_marginStart="10dp"
+                           android:paddingStart="5dp"
+                           android:text="Other"
+                           android:textColor="@color/white"
+                           android:id="@+id/other"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"/>
+                   </RadioGroup>
+
                 </LinearLayout>
 
             </RelativeLayout>
+
             <RelativeLayout
                 android:id="@+id/relative_country"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginTop="8dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:background="@drawable/border_shap">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:id="@+id/email"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:backgroundTint="@android:color/transparent"
+                    android:layout_centerVertical="true"
                     android:layout_marginStart="13dp"
                     android:hint="@string/email"
-                    android:id="@+id/email"
-                    android:textColorHint="@color/btn_red"
-                    android:layout_centerVertical="true"
-                    android:textStyle="bold"
                     android:textColor="@color/txt_red"
-                    android:textSize="16dp" />
+                    android:textColorHint="@color/btn_red"
+                    android:textSize="16dp"
+                    android:textStyle="normal" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
-                    android:visibility="gone"
-                    android:src="@drawable/edit_icon"
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="30dp"
+                    android:src="@drawable/edit_icon"
+                    android:visibility="gone"
                     app:tint="@color/txt_red" />
 
             </RelativeLayout>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/saveButton"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_marginTop="20dp"
+                android:layout_above="@+id/bottomLayout"
+
+                android:layout_marginBottom="150dp"
+                android:backgroundTint="@color/btn_red"
+                android:text="Save"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                app:cornerRadius="8dp" />
 
         </LinearLayout>
     </ScrollView>
 
 
 
-
-    <com.google.android.material.button.MaterialButton
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:id="@+id/saveButton"
-        android:text="Save"
-        android:layout_marginTop="35dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
-        app:cornerRadius="30dp"
-        android:textColor="@color/white"
-        android:layout_above="@+id/bottomLayout"
-        android:backgroundTint="@color/btn_red"
-        android:textSize="18dp"
-        android:textStyle="bold"
-        android:textAllCaps="false"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -297,8 +305,8 @@
 
         <ImageView
             android:id="@+id/img_secure"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
             android:visibility="gone"
             android:layout_gravity="center"
             android:src="@drawable/smart_secure_icon" />

@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
-        android:src="@android:drawable/ic_dialog_alert">
+        android:src="@mipmap/ic_launcher">
     </ImageView>
     <TextView
         android:layout_width="wrap_content"
@@ -29,7 +29,7 @@
         android:layout_marginTop="20dp"
         android:text="@string/delete_are_you_sure"
         android:layout_marginLeft="16dp"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:layout_marginRight="16dp"
         android:layout_height="wrap_content">
     </TextView>

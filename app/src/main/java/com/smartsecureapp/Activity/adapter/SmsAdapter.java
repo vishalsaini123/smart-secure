@@ -3,6 +3,7 @@ package com.smartsecureapp.Activity.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -49,7 +50,8 @@ public class SmsAdapter extends RecyclerView.Adapter<SmsAdapter.CallViewHolder> 
     }
 
     public class CallViewHolder extends RecyclerView.ViewHolder {
-        TextView name,deleteContact;
+        TextView name;
+        ImageButton deleteContact;
         public CallViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.name);

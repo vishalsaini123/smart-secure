@@ -72,7 +72,7 @@ public class ActivityEmailContact extends AppCompatActivity {
         txt_term_condition.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Utils.term_and_conditions));
+                Intent browserIntent = new Intent(ActivityEmailContact.this, TermsConditionsActivity.class);
                 startActivity(browserIntent);
             }
         });
@@ -94,8 +94,8 @@ public class ActivityEmailContact extends AppCompatActivity {
         });
 
 
-        txt_privacy_policy.setPaintFlags(txt_privacy_policy.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-        txt_term_condition.setPaintFlags(txt_term_condition.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+       // txt_privacy_policy.setPaintFlags(txt_privacy_policy.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+       // txt_term_condition.setPaintFlags(txt_term_condition.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
     }
 
     private void clickListeners() {
@@ -135,6 +135,7 @@ public class ActivityEmailContact extends AppCompatActivity {
                                     phoneList.add(phoneEditText.getText().toString());
                                     orderList.add(String.valueOf(nameList.size()));
                                     setAdapter(nameList);
+                                    noContact.setVisibility(View.GONE);
                                     dialog.dismiss();
                                 }else {
                                     if (nameEditText.getText().toString().isEmpty()){
@@ -194,8 +195,9 @@ public class ActivityEmailContact extends AppCompatActivity {
             @Override
             public void onResponse(Call<GetEmailContact> call, Response<GetEmailContact> response) {
                 loading.setVisibility(View.INVISIBLE);
-                if (response!=null && response.body()!=null && !response.body().getContacts().isEmpty()) {
-                    resetList(response);
+                if ( response.body()!=null && response.body().getContacts()!=null) {
+                    if (!response.body().getContacts().isEmpty())
+                       resetList(response);
                 }
             }
 
