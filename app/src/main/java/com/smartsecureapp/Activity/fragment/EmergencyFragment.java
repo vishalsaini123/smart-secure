@@ -132,7 +132,17 @@ public class EmergencyFragment extends Fragment {
         emergencyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                emergencyButton.setEnabled(false);
                 onEmergencyClick();
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        emergencyButton.setEnabled(true);
+                    }
+                },2000);
                // showDialog();
             }
         });
@@ -187,7 +197,7 @@ public class EmergencyFragment extends Fragment {
     public void onEmergencyClick() {
 
 
-        loading.showDialog(getActivity(),"Loading...");
+       loading.showDialog(getActivity(),"Loading...");
         siren = "0";
         showDialog();
         surroundingSound();
@@ -587,7 +597,7 @@ public class EmergencyFragment extends Fragment {
 
     void showDialog(){
 
-      dialog = new Dialog(getContext(), android.R.style.Theme_Dialog);
+      Dialog dialog = new Dialog(getContext(), android.R.style.Theme_Dialog);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(false);
         dialog.setContentView(R.layout.dlg_stop_emergencytimer);
@@ -601,9 +611,14 @@ public class EmergencyFragment extends Fragment {
         doneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.e("comes ","comes");
+                Log.e("comes ","comes"+passwordEditText.getText().toString().equalsIgnoreCase(getLoginApiFromShared(Utils.MySharedPassword)));
+
                 if (!passwordEditText.getText().toString().isEmpty() && passwordEditText.getText().toString().equalsIgnoreCase(getLoginApiFromShared(Utils.MySharedPassword))) {
 
+                    Log.e("comes ","comes");
                     loading.dismissDialog();
+                    dialog.dismiss();
                     if (sendRecording!=null)
                     { sendRecording.cancel();}
 
@@ -622,7 +637,7 @@ public class EmergencyFragment extends Fragment {
                     {
                         player.stop();
                     }
-                    dialog.dismiss();
+
                     if (countDownTimer!=null)
                         countDownTimer.onFinish();
                 }

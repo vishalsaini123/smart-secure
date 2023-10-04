@@ -103,13 +103,13 @@ public class TimerFragment extends Fragment {
 
 
     boolean animatorReset = false;
-
+    ProgressHelper loading;
     TextView txt_term_condition;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_timer, container, false);
         setTimer = view.findViewById(R.id.setTimer);
-
+        loading = new ProgressHelper();
         timeDisplay = view.findViewById(R.id.timeDisplay);
         timePercentage = view.findViewById(R.id.timePercentage);
         progressBar = view.findViewById(R.id.progressBar);
@@ -149,6 +149,7 @@ public class TimerFragment extends Fragment {
                     public void onClick(View view) {
                         if (!passwordEditText.getText().toString().isEmpty() && passwordEditText.getText().toString().equalsIgnoreCase(getLoginApiFromShared(Utils.MySharedPassword))) {
 
+
                             Intent intent_service = new Intent(getActivity(), Timer_Service.class);
 
                             getActivity().stopService(intent_service);
@@ -176,15 +177,18 @@ public class TimerFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 setTimer.setEnabled(false);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        setTimer.setEnabled(true);
+                    }
+                },3000);
                 Calendar mcurrentTime = Calendar.getInstance();
                 int currenthour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
                 int currentminute = mcurrentTime.get(Calendar.MINUTE);
 
-                if (isMyServiceRunning(Timer_Service.class))
-                {
-                    Toast.makeText(getActivity(), "Please wait to complete first process", Toast.LENGTH_SHORT).show();
-                }
-                else{
+
                    TimePickerPopup timePickerPopup = new TimePickerPopup.Builder()
                             .from(getActivity())
                             .offset(3)
@@ -208,7 +212,7 @@ public class TimerFragment extends Fragment {
                                     stopTimer.setVisibility(View.VISIBLE);
                                     long millis = datetime.getTimeInMillis() - mcurrentTime.getTimeInMillis();
 
-
+                                    loading.showDialog(getActivity(),"Please wait...");
                                     //long millis = calendar.get(Calendar.MILLISECOND);
                                     Log.e("milis selected",""+millis);
                                     Log.e("milis selected",""+datetime.getTimeInMillis());
@@ -230,14 +234,21 @@ public class TimerFragment extends Fragment {
                    timePickerPopup.show();
                    timePickerPopup.setCancelable(false);
                    timePickerPopup.setCanceledOnTouchOutside(false);
+                   timePickerPopup.setOnShowListener(new DialogInterface.OnShowListener() {
+                       @Override
+                       public void onShow(DialogInterface dialogInterface) {
+
+                           Log.e("onshow","called");
+                           loading.dismissDialog();
+                       }
+                   });
                    timePickerPopup.setOnDismissListener(new DialogInterface.OnDismissListener() {
                        @Override
                        public void onDismiss(DialogInterface dialogInterface) {
-                           setTimer.setEnabled(true);
                        }
                    });
 
-                }
+
 
 
             }
@@ -268,7 +279,7 @@ public class TimerFragment extends Fragment {
         txt_emergency_two.setVisibility(View.VISIBLE);
         stopTimer.setVisibility(View.INVISIBLE);
         setTimer.setVisibility(View.VISIBLE);
-        setTimer.setEnabled(true);
+
         timePercentage.setText("0%");
         if (countDownTimer != null) {
             countDownTimer.cancel();
@@ -382,7 +393,7 @@ public class TimerFragment extends Fragment {
                     timeDisplay.setText(yy);
                     if (  hours==0 && elapsedMinutes == 0 && elapsedSeconds == 0) {
                         stopTimer.setVisibility(View.VISIBLE);
-
+                        loading.dismissDialog();
 
                     }
 
@@ -404,6 +415,7 @@ public class TimerFragment extends Fragment {
           //  txt_emergency_one.setVisibility(View.VISIBLE);
            // txt_emergency_two.setVisibility(View.VISIBLE);
             stopTimer.setVisibility(View.VISIBLE);
+
         }
 
         if (Timer_Service.resetTimer==0)

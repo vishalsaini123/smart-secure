@@ -49,11 +49,14 @@ public class PasswordResetActivityOtp extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!passwordOne.getText().toString().isEmpty() && !passwordTwo.getText().toString().isEmpty() && passwordOne.getText().toString().equalsIgnoreCase(passwordTwo.getText().toString())){
-                    passwordResetOne();
-
-                }else {
+                if (passwordOne.getText().toString().isEmpty() && passwordTwo.getText().toString().isEmpty()){
                     showSnackBar("All fields are required.");
+
+                } else if (passwordOne.getText().toString().equalsIgnoreCase(passwordTwo.getText().toString())) {
+                    showSnackBar("Entered Password is mismatched");
+                } else {
+
+                    passwordResetOne();
                 }
             }
         });
