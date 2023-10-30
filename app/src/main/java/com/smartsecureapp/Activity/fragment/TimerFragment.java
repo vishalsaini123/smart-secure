@@ -212,7 +212,7 @@ public class TimerFragment extends Fragment {
                                     stopTimer.setVisibility(View.VISIBLE);
                                     long millis = datetime.getTimeInMillis() - mcurrentTime.getTimeInMillis();
 
-                                    loading.showDialog(getActivity(),"Please wait...");
+                                   // loading.showDialog(getActivity(),"Please wait...");
                                     //long millis = calendar.get(Calendar.MILLISECOND);
                                     Log.e("milis selected",""+millis);
                                     Log.e("milis selected",""+datetime.getTimeInMillis());
@@ -298,7 +298,6 @@ public class TimerFragment extends Fragment {
     }
 
     public void showAnimation(long l) {
-        Log.e("ll",""+l);
         ValueAnimator animator = ValueAnimator.ofInt(0, progressBar.getMax());
         animator.setDuration(l);
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -392,7 +391,7 @@ public class TimerFragment extends Fragment {
                         yy = String.format("%02d:%02d:%02d",hours, elapsedMinutes, elapsedSeconds);
                     timeDisplay.setText(yy);
                     if (  hours==0 && elapsedMinutes == 0 && elapsedSeconds == 0) {
-                        stopTimer.setVisibility(View.VISIBLE);
+                       resetTimer();
                         loading.dismissDialog();
 
                     }
@@ -409,18 +408,19 @@ public class TimerFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (isMyServiceRunning(Timer_Service.class))
-        {
-           // setTimer.setVisibility(View.INVISIBLE);
-          //  txt_emergency_one.setVisibility(View.VISIBLE);
-           // txt_emergency_two.setVisibility(View.VISIBLE);
-            stopTimer.setVisibility(View.VISIBLE);
 
-        }
+
+
+
 
         if (Timer_Service.resetTimer==0)
         {
             stopTimer.setVisibility(View.VISIBLE);
+            timeDisplay.setText("00:00");
+             setTimer.setVisibility(View.VISIBLE);
+              txt_emergency_one.setVisibility(View.VISIBLE);
+             txt_emergency_two.setVisibility(View.VISIBLE);
+            stopTimer.setVisibility(View.GONE);
         }
 
         getActivity().registerReceiver(broadcastReceiver,new IntentFilter(Timer_Service.str_receiver));

@@ -52,7 +52,7 @@ public class PasswordResetActivityOtp extends AppCompatActivity {
                 if (passwordOne.getText().toString().isEmpty() && passwordTwo.getText().toString().isEmpty()){
                     showSnackBar("All fields are required.");
 
-                } else if (passwordOne.getText().toString().equalsIgnoreCase(passwordTwo.getText().toString())) {
+                } else if (!passwordOne.getText().toString().equalsIgnoreCase(passwordTwo.getText().toString())) {
                     showSnackBar("Entered Password is mismatched");
                 } else {
 
