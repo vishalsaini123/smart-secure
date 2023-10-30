@@ -415,12 +415,14 @@ public class TimerFragment extends Fragment {
 
         if (Timer_Service.resetTimer==0)
         {
-            stopTimer.setVisibility(View.VISIBLE);
+
+            resetTimer();
+            /*stopTimer.setVisibility(View.VISIBLE);
             timeDisplay.setText("00:00");
              setTimer.setVisibility(View.VISIBLE);
               txt_emergency_one.setVisibility(View.VISIBLE);
              txt_emergency_two.setVisibility(View.VISIBLE);
-            stopTimer.setVisibility(View.GONE);
+            stopTimer.setVisibility(View.GONE);*/
         }
 
         getActivity().registerReceiver(broadcastReceiver,new IntentFilter(Timer_Service.str_receiver));
