@@ -104,6 +104,7 @@ public class TimerFragment extends Fragment {
 
     boolean animatorReset = false;
     ProgressHelper loading;
+    boolean isdialogShowed = false;
     TextView txt_term_condition;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -391,8 +392,56 @@ public class TimerFragment extends Fragment {
                         yy = String.format("%02d:%02d:%02d",hours, elapsedMinutes, elapsedSeconds);
                     timeDisplay.setText(yy);
                     if (  hours==0 && elapsedMinutes == 0 && elapsedSeconds == 0) {
-                       resetTimer();
-                        loading.dismissDialog();
+
+                        if (!isdialogShowed)
+                        {
+                            Dialog dialog = new Dialog(getContext(), android.R.style.Theme_Dialog);
+                            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                            dialog.setContentView(R.layout.dlg_stop_timer);
+                            dialog.getWindow().setBackgroundDrawableResource(android.R.color.black);
+                            dialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+                            dialog.getWindow().setBackgroundDrawableResource(android.R.color.black);
+                            dialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);                        TextInputEditText passwordEditText = (TextInputEditText) dialog.findViewById(R.id.passwordEditText);
+                            TextView forgotpassbtn = (TextView) dialog.findViewById(R.id.timerdlg_forgotpassbtn);
+
+                            forgotpassbtn.setOnClickListener(v ->  startActivity(new Intent(getActivity(), PasswordResetActivity.class)));
+                            MaterialButton cancelButton = (MaterialButton) dialog.findViewById(R.id.cancelButton);
+                            MaterialButton doneButton = (MaterialButton) dialog.findViewById(R.id.confirmButton);
+                            doneButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    if (!passwordEditText.getText().toString().isEmpty() && passwordEditText.getText().toString().equalsIgnoreCase(getLoginApiFromShared(Utils.MySharedPassword))) {
+
+                                        isdialogShowed = false;
+                                        Intent intent_service = new Intent(getActivity(), Timer_Service.class);
+
+                                        getActivity().stopService(intent_service);
+
+                                        resetTimer();
+                                        dialog.dismiss();
+                                    }
+                                    else {
+                                        Toast.makeText(getActivity(), "Please enter the correct password!", Toast.LENGTH_SHORT).show();
+
+                                    }
+
+                                }
+                            });
+                            cancelButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+
+                                    isdialogShowed = false;
+                                    dialog.dismiss();
+                                }
+                            });
+                            dialog.show();
+                            // resetTimer();
+                            loading.dismissDialog();
+                            isdialogShowed = true;
+                        }
+
+
 
                     }
 

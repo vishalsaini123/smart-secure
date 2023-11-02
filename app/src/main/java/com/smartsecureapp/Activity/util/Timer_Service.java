@@ -173,7 +173,7 @@ public class Timer_Service extends Service {
 
                         fn_update(0);
                         resetTimer = 0;
-                        stopSelf();
+                       // stopSelf();
 
 
 
